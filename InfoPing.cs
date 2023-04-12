@@ -10,7 +10,7 @@ namespace QProtocol
     /// This class can be used to decode the ping Endpoint request.
     /// </summary>
     [Serializable]
-    public class Ping
+    public class InfoPing
     {
         /// <summary>
         /// Gets and error code from when something went wrong.
