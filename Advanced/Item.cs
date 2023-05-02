@@ -6,6 +6,7 @@ using QProtocol.GenericDefines;
 using QProtocol.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QProtocol.Advanced
 {
@@ -82,7 +83,7 @@ namespace QProtocol.Advanced
         /// <param name="systemSettings">An instance of the <see cref="SystemSettings"/> class.</param>
         /// <param name="restfulInterface">An implemented instance of the <see cref="IRestfulInterface"/> interface.</param>
         /// <returns>A List of instances of <see cref="Item"/> representing the QServer system.</returns>
-        public static IEnumerable<Item> CreateList(IRestfulInterface restfulInterface)
+        public static List<Item> CreateList(IRestfulInterface restfulInterface)
         {
             if (restfulInterface == null)
             {
@@ -90,28 +91,8 @@ namespace QProtocol.Advanced
             }
 
             var rootItem = Create(restfulInterface);
-            return rootItem.ConvertToList();
-        }
-
-        /// <summary>
-        /// This method will convert a Tree structured instance of <see cref="Item"/> to a flat list.
-        /// </summary>
-        /// <returns>A List of instances of <see cref="Item"/> representing the QServer system.</returns>
-        public IEnumerable<Item> ConvertToList()
-        {
-            var nodes = new Stack<Item>();
-            nodes.Push(this);
-
-            while (nodes.Count > 0)
-            {
-                var node = nodes.Pop();
-                yield return node;
-
-                for (int nodeIndex = node.Children.Count - 1; nodeIndex >= 0; nodeIndex--)
-                {
-                    nodes.Push(node.Children[nodeIndex]);
-                }
-            }
+            return rootItem.ConvertToList()
+                           .ToList();
         }
 
         /// <summary>
@@ -170,6 +151,23 @@ namespace QProtocol.Advanced
             foreach (var child in itemInfo.Children)
             {
                 RegisterInterfaceForChildren(child, commandInterfaceReference);
+            }
+        }
+
+        private IEnumerable<Item> ConvertToList()
+        {
+            var nodes = new Stack<Item>();
+            nodes.Push(this);
+
+            while (nodes.Count > 0)
+            {
+                var node = nodes.Pop();
+                yield return node;
+
+                for (int nodeIndex = node.Children.Count - 1; nodeIndex >= 0; nodeIndex--)
+                {
+                    nodes.Push(node.Children[nodeIndex]);
+                }
             }
         }
 
