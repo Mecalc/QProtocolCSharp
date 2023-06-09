@@ -61,7 +61,7 @@ namespace QProtocol.DeviceFeatures
             public Single PreRunDurationInSeconds { get; set; }
 
             [RestfulProperties("Measurement Name")]
-            public String MeasurementTag { get; set; }
+            public String MeasurementName { get; set; }
 
             [RestfulProperties("Measurement Description")]
             public String MeasurementDescription { get; set; }

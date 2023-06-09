@@ -77,12 +77,6 @@ namespace QProtocol.InternalModules.ICS
             Closed = 1,
         }
 
-        public enum HighSampleRate
-        {
-            [RestfulProperties("MSR Divide by 1", 1, "")]
-            MsrDivideBy1 = 0,
-        }
-
         public enum OperationMode
         {
             [RestfulProperties("Disabled")]
@@ -90,9 +84,6 @@ namespace QProtocol.InternalModules.ICS
 
             [RestfulProperties("Enabled")]
             Enabled = 1,
-
-            [RestfulProperties("Enable High Sample Rate")]
-            EnableHighSampleRate = 2,
         }
 
         public interface ISettings
@@ -112,23 +103,6 @@ namespace QProtocol.InternalModules.ICS
 
             [RestfulProperties("Sample Rate")]
             public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy256;
-
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-
-            [RestfulProperties("Bridge Negative Channels 1:3")]
-            public BridgeNegativeChannels1And3 BridgeNegativeChannels1And3 { get; set; } = BridgeNegativeChannels1And3.Open;
-
-            [RestfulProperties("Bridge Negative Channels 4:6")]
-            public BridgeNegativeChannels4And6 BridgeNegativeChannels4And6 { get; set; } = BridgeNegativeChannels4And6.Open;
-        }
-
-        [Serializable]
-        public class EnableHighSampleRateSettings : ISettings
-        {
-
-            [RestfulProperties("High Sample Rate")]
-            public HighSampleRate HighSampleRate { get; set; } = HighSampleRate.MsrDivideBy1;
 
             [RestfulProperties("Grounding")]
             public Grounding Grounding { get; set; } = Grounding.Floating;

@@ -11,74 +11,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.CHS
+namespace QProtocol.InternalModules.WSB
 {
     [Serializable]
-    public class CHS42X4Module : Item
+    public class WSB42X6Module : Item
     {
-        public CHS42X4Module(Item itemInfo)
+        public WSB42X6Module(Item itemInfo)
             : base(itemInfo)
         {
         }
 
-        public const System.Int32 NumberOfChannelsOnModule = 6;
-        public const System.Int32 NumberOfChannelGroups = 2;
-        public const System.Int32 NumberOfChannelsInAGroup = 3;
-        public const System.Int32 FirstChannelGroupStartIndex = 0;
-        public const System.Int32 SecondChannelGroupStartIndex = 3;
+        public const System.Int32 NumberOfChannelsOnModule = 4;
+        public const System.Double RangeScale = 11.986385;
+        public const System.Double GainScale0 = 11.986385;
+        public const System.Double GainScale1 = 1.198639;
+        public const System.Double GainScale2 = 0.147756;
+        public const System.Double GainScale3 = 0.014776;
 
         public enum SampleRate
         {
+            [RestfulProperties("MSR Divide by 1", 1, "")]
+            MsrDivideBy1 = 0,
+
             [RestfulProperties("MSR Divide by 2", 2, "")]
-            MsrDivideBy2 = 0,
+            MsrDivideBy2 = 1,
 
             [RestfulProperties("MSR Divide by 4", 4, "")]
-            MsrDivideBy4 = 1,
+            MsrDivideBy4 = 2,
 
             [RestfulProperties("MSR Divide by 8", 8, "")]
-            MsrDivideBy8 = 2,
+            MsrDivideBy8 = 3,
 
             [RestfulProperties("MSR Divide by 16", 16, "")]
-            MsrDivideBy16 = 3,
+            MsrDivideBy16 = 4,
 
             [RestfulProperties("MSR Divide by 32", 32, "")]
-            MsrDivideBy32 = 4,
+            MsrDivideBy32 = 5,
 
             [RestfulProperties("MSR Divide by 64", 64, "")]
-            MsrDivideBy64 = 5,
+            MsrDivideBy64 = 6,
 
             [RestfulProperties("MSR Divide by 128", 128, "")]
-            MsrDivideBy128 = 6,
+            MsrDivideBy128 = 7,
 
             [RestfulProperties("MSR Divide by 256", 256, "")]
-            MsrDivideBy256 = 7,
-        }
-
-        public enum Grounding
-        {
-            [RestfulProperties("Floating")]
-            Floating = 0,
-
-            [RestfulProperties("Grounded")]
-            Grounded = 1,
-        }
-
-        public enum BridgeNegativeChannels1And3
-        {
-            [RestfulProperties("Open")]
-            Open = 0,
-
-            [RestfulProperties("Closed")]
-            Closed = 1,
-        }
-
-        public enum BridgeNegativeChannels4And6
-        {
-            [RestfulProperties("Open")]
-            Open = 0,
-
-            [RestfulProperties("Closed")]
-            Closed = 1,
+            MsrDivideBy256 = 8,
         }
 
         public enum OperationMode
@@ -95,7 +72,7 @@ namespace QProtocol.InternalModules.CHS
         }
 
         [Serializable]
-        public class CHS42X4ModuleOperationMode
+        public class WSB42X6ModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -107,21 +84,6 @@ namespace QProtocol.InternalModules.CHS
 
             [RestfulProperties("Sample Rate")]
             public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy256;
-
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-
-            [RestfulProperties("Bridge Negative Channels 1:3")]
-            public BridgeNegativeChannels1And3 BridgeNegativeChannels1And3 { get; set; } = BridgeNegativeChannels1And3.Open;
-
-            [RestfulProperties("Bridge Negative Channels 4:6")]
-            public BridgeNegativeChannels4And6 BridgeNegativeChannels4And6 { get; set; } = BridgeNegativeChannels4And6.Open;
-
-            [RestfulProperties("Channel 1, 2 and 3 Operation Mode")]
-            public InternalModules.CHS.CHS42X4Channel.OperationMode Channel123OperationMode { get; set; } = InternalModules.CHS.CHS42X4Channel.OperationMode.VoltageInput;
-
-            [RestfulProperties("Channel 4, 5 and 6 Operation Mode")]
-            public InternalModules.CHS.CHS42X4Channel.OperationMode Channel456OperationMode { get; set; } = InternalModules.CHS.CHS42X4Channel.OperationMode.VoltageInput;
         }
 
         [Serializable]
@@ -168,14 +130,14 @@ namespace QProtocol.InternalModules.CHS
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<CHS42X4ModuleOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<WSB42X6ModuleOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public void PutItemOperationMode(OperationMode operationMode)
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new CHS42X4ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new WSB42X6ModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);

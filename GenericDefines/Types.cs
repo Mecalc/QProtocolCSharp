@@ -76,6 +76,12 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("WSB42X2")]
             WSB42X2 = 227,
 
+            [RestfulProperties("WSBM42X5")]
+            WSBM42X5 = 229,
+
+            [RestfulProperties("WSB42X6")]
+            WSB42X6 = 230,
+
             [RestfulProperties("GPS42S5")]
             GPS42S5 = 162,
 
@@ -231,6 +237,12 @@ namespace QProtocol.GenericDefines
 
             [RestfulProperties("ALI42X2")]
             ALI42X2 = 49,
+
+            [RestfulProperties("WSB42X5")]
+            WSB42X5 = 50,
+
+            [RestfulProperties("WSB42X6")]
+            WSB42X6 = 51,
 
             [RestfulProperties("Unsupported")]
             Unsupported = 253,
