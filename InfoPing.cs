@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 // Copyright (c) Mecalc (Pty) Limited. All rights reserved.
 // -------------------------------------------------------------------------
 
@@ -7,7 +7,7 @@ using System;
 namespace QProtocol
 {
     /// <summary>
-    /// This class can be used to decode the ping Endpoint request.
+    /// This class can be used to decode the info/ping/ Endpoint request.
     /// </summary>
     [Serializable]
     public class InfoPing
