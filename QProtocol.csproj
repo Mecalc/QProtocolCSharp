@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>AnyCPU;x86;x64</Platforms>
-    <BaseOutputPath>..\..\..\..\Output\QProtocol</BaseOutputPath>
     <Configurations>Debug;Release;BuildServer</Configurations>
     <AssemblyVersion>2.2.0.0</AssemblyVersion>
     <FileVersion>2.2.0.0</FileVersion>
