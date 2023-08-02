@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace QProtocol
 {
-    /// <summary>
+    /// <summary> vla
     /// This class can be used with the /canfd/message/list/ endpoint to deserialize the response received and serialize the body sent.
     /// </summary>
     [Serializable]
