@@ -96,7 +96,7 @@ namespace QProtocol.InternalModules.CHS
             Enabled = 1,
 
             [RestfulProperties("Four Channel High Sample Rate")]
-            EnableHighSampleRate = 2,
+            FourChannelHighSampleRate = 2,
         }
 
         public interface ISettings
@@ -134,7 +134,7 @@ namespace QProtocol.InternalModules.CHS
         }
 
         [Serializable]
-        public class EnableHighSampleRateSettings : ISettings
+        public class FourChannelHighSampleRateSettings : ISettings
         {
 
             [RestfulProperties("High Sample Rate")]
