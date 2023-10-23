@@ -4,8 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <Configurations>Debug;Release;BuildServer</Configurations>
-    <AssemblyVersion>2.2.0.0</AssemblyVersion>
-    <FileVersion>2.2.0.0</FileVersion>
+    <AssemblyVersion>2.3.0.0</AssemblyVersion>
+    <FileVersion>2.3.0.0</FileVersion>
     <Company>Mecalc (Pty) Ltd</Company>
     <Copyright>Mecalc (Pty) Ltd © 2023</Copyright>
     <Authors>Mecalc (Pty) Ltd</Authors>

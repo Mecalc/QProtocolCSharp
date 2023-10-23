@@ -73,5 +73,18 @@ namespace QProtocol.DeviceFeatures
             [RestfulProperties("RecordingState")]
             public RecordingStates CurrentState { get; set; }
         }
+
+        [Serializable]
+        public class RecordingStats
+        {
+            [RestfulProperties("ElapsedSeconds")]
+            public UInt32 ElapsedSeconds { get; set; }
+
+            [RestfulProperties("EstimatedSecondsLeft")]
+            public UInt32 EstimatedSecondsLeft { get; set; }
+
+            [RestfulProperties("UsagePercentage")]
+            public UInt32 UsagePercentage { get; set; }
+        }
     }
 }

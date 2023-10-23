@@ -11,12 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ICT
+namespace QProtocol.InternalModules.CHG
 {
     [Serializable]
-    public class ICT42S6IcpChannel : DataChannelItem
+    public class CHG42S9Channel : DataChannelItem
     {
-        public ICT42S6IcpChannel(Item itemInfo)
+        public CHG42S9Channel(Item itemInfo)
             : base(itemInfo)
         {
         }
@@ -27,50 +27,11 @@ namespace QProtocol.InternalModules.ICT
             [RestfulProperties("Disabled")]
             Disabled = 0,
 
-            [RestfulProperties("Voltage Input")]
-            VoltageInput = 1,
-
-            [RestfulProperties("ICP® Input")]
-            IcpInput = 2,
+            [RestfulProperties("Charge Input")]
+            ChargeInput = 1,
         }
 
-        public enum VoltageInputRange
-        {
-            [RestfulProperties("100 mV", 0.1, "V")]
-            _100mV = 0,
-
-            [RestfulProperties("1 V", 1, "V")]
-            _1V = 1,
-
-            [RestfulProperties("10 V", 10, "V")]
-            _10V = 2,
-
-            [RestfulProperties("60 V", 60, "V")]
-            _60V = 3,
-        }
-
-        public enum VoltageInputBiasing
-        {
-            [RestfulProperties("Differential")]
-            Differential = 0,
-
-            [RestfulProperties("Single Ended")]
-            SingleEnded = 1,
-        }
-
-        public enum VoltageInputCoupling
-        {
-            [RestfulProperties("DC")]
-            Dc = 0,
-
-            [RestfulProperties("AC")]
-            Ac = 1,
-
-            [RestfulProperties("AC with 1 Hz Filter")]
-            AcWith1HzFilter = 2,
-        }
-
-        public enum IcpInputVoltageRange
+        public enum VoltageRange
         {
             [RestfulProperties("100 mV", 0.1, "V")]
             _100mV = 0,
@@ -82,31 +43,34 @@ namespace QProtocol.InternalModules.ICT
             _10V = 2,
         }
 
-        public enum IcpInputBiasing
+        public enum InputCoupling
         {
-            [RestfulProperties("Single Ended")]
-            SingleEnded = 0,
+            [RestfulProperties("No Filter")]
+            NoFilter = 0,
+
+            [RestfulProperties("1 Hz Filter")]
+            _1HzFilter = 1,
         }
 
-        public enum IcpInputCoupling
+        public enum CableShieldGrounding
         {
-            [RestfulProperties("AC")]
-            Ac = 0,
+            [RestfulProperties("Floating")]
+            Floating = 0,
 
-            [RestfulProperties("AC with 1 Hz Filter")]
-            AcWith1HzFilter = 1,
+            [RestfulProperties("Grounded")]
+            Grounded = 1,
         }
 
-        public enum IcpInputCurrentSource
+        public enum ChargeSensitivity
         {
-            [RestfulProperties("4 mA", 0.004, "A")]
-            _4mA = 0,
+            [RestfulProperties("100 µV/pC", 0.1, "")]
+            _10uVppC = 0,
 
-            [RestfulProperties("8 mA", 0.008, "A")]
-            _8mA = 1,
+            [RestfulProperties("1 mV/pC", 1, "")]
+            _1mVppC = 1,
 
-            [RestfulProperties("12 mA", 0.0012, "A")]
-            _12mA = 2,
+            [RestfulProperties("10 mV/pC", 10, "")]
+            _10mVppC = 2,
         }
 
         public interface ISettings
@@ -114,41 +78,27 @@ namespace QProtocol.InternalModules.ICT
         }
 
         [Serializable]
-        public class ICT42S6IcpChannelOperationMode
+        public class CHG42S9ChannelOperationMode
         {
             [RestfulProperties("Operation Mode")]
-            public OperationMode OperationMode { get; set; } = OperationMode.VoltageInput;
+            public OperationMode OperationMode { get; set; } = OperationMode.ChargeInput;
         }
 
         [Serializable]
-        public class VoltageInputSettings : ISettings
+        public class ChargeInputSettings : ISettings
         {
 
             [RestfulProperties("Voltage Range")]
-            public VoltageInputRange VoltageInputRange { get; set; } = VoltageInputRange._10V;
+            public VoltageRange VoltageRange { get; set; } = VoltageRange._10V;
 
-            [RestfulProperties("Input Biasing")]
-            public VoltageInputBiasing VoltageInputBiasing { get; set; } = VoltageInputBiasing.Differential;
+            [RestfulProperties("Charge Sensitivity")]
+            public ChargeSensitivity ChargeSensitivity { get; set; } = ChargeSensitivity._1mVppC;
 
-            [RestfulProperties("Coupling")]
-            public VoltageInputCoupling VoltageInputCoupling { get; set; } = VoltageInputCoupling.Dc;
-        }
+            [RestfulProperties("Cable Shield Grounding")]
+            public CableShieldGrounding CableShieldGrounding { get; set; } = CableShieldGrounding.Floating;
 
-        [Serializable]
-        public class IcpInputSettings : ISettings
-        {
-
-            [RestfulProperties("Voltage Range")]
-            public IcpInputVoltageRange IcpInputVoltageRange { get; set; } = IcpInputVoltageRange._10V;
-
-            [RestfulProperties("Input Biasing")]
-            public IcpInputBiasing IcpInputBiasing { get; set; } = IcpInputBiasing.SingleEnded;
-
-            [RestfulProperties("Coupling")]
-            public IcpInputCoupling IcpInputCoupling { get; set; } = IcpInputCoupling.AcWith1HzFilter;
-
-            [RestfulProperties("Current Source")]
-            public IcpInputCurrentSource IcpInputCurrentSource { get; set; } = IcpInputCurrentSource._4mA;
+            [RestfulProperties("Input Coupling")]
+            public InputCoupling InputCoupling { get; set; } = InputCoupling._1HzFilter;
         }
 
         [Serializable]
@@ -196,7 +146,7 @@ namespace QProtocol.InternalModules.ICT
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ICT42S6IcpChannelOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new CHG42S9ChannelOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
@@ -205,18 +155,13 @@ namespace QProtocol.InternalModules.ICT
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ICT42S6IcpChannelOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<CHG42S9ChannelOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public Models.ChannelDeviceInterface.AutoZeroSettings GetAutoZeroSettings()
         {
             var jsonObject = RestInterface.Get<AutoZeroSettings>(EndPoints.AutoZeroSettings, HttpParameter.ItemId(ItemId));
             return Setting.ConvertTo<Models.ChannelDeviceInterface.AutoZeroSettings>(jsonObject.Settings);
-        }
-
-        public TedsInfo GetTedsInfo()
-        {
-            return RestInterface.Get<TedsInfo>(EndPoints.TedsInfo, HttpParameter.ItemId(ItemId));
         }
 
         public void PutAutoZeroSettings(Models.ChannelDeviceInterface.AutoZeroSettings settings)

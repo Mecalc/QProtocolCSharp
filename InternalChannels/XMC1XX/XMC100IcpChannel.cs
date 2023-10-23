@@ -297,5 +297,10 @@ namespace QProtocol.InternalChannels.XMC1XX
             var jsonObject = base.GetItemOperationMode();
             return Setting.ConvertTo<XMC100IcpChannelOperationMode>(jsonObject.Settings).OperationMode;
         }
+
+        public TedsInfo GetTedsInfo()
+        {
+            return RestInterface.Get<TedsInfo>(EndPoints.TedsInfo, HttpParameter.ItemId(ItemId));
+        }
     }
 }

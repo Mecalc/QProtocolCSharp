@@ -61,6 +61,9 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("TAC221")]
             TAC221 = 222,
 
+            [RestfulProperties("CHG42S9")]
+            CHG42S9 = 146,
+
             [RestfulProperties("DCH42S2")]
             DCH42S2 = 149,
 
@@ -76,8 +79,8 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("WSB42X2")]
             WSB42X2 = 227,
 
-            [RestfulProperties("WSBM42X5")]
-            WSBM42X5 = 229,
+            [RestfulProperties("WSB42X5")]
+            WSB42X5 = 229,
 
             [RestfulProperties("WSB42X6")]
             WSB42X6 = 230,
@@ -93,6 +96,9 @@ namespace QProtocol.GenericDefines
 
             [RestfulProperties("UTM42T0")]
             UTM42T0 = 192,
+
+            [RestfulProperties("UTM42T1")]
+            UTM42T1 = 193,
 
             [RestfulProperties("ALI42X1")]
             ALI42X1 = 239,
@@ -129,6 +135,12 @@ namespace QProtocol.GenericDefines
 
             [RestfulProperties("SC42S G2")]
             SC42S8 = 10080,
+
+            [RestfulProperties("SC45")]
+            SC450 = 10087,
+
+            [RestfulProperties("SC25")]
+            SC250 = 10088,
 
             [RestfulProperties("SC10")]
             SC104 = 10101,
@@ -238,11 +250,17 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("ALI42X2")]
             ALI42X2 = 49,
 
+            [RestfulProperties("UTM42T1")]
+            UTM42T1 = 50,
+
             [RestfulProperties("WSB42X5")]
-            WSB42X5 = 50,
+            WSB42X5 = 51,
 
             [RestfulProperties("WSB42X6")]
-            WSB42X6 = 51,
+            WSB42X6 = 52,
+
+            [RestfulProperties("CHG42S9")]
+            CHG42S9 = 54,
 
             [RestfulProperties("Unsupported")]
             Unsupported = 253,
