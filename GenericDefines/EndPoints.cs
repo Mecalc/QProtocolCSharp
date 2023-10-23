@@ -16,6 +16,7 @@ namespace QProtocol.GenericDefines
     [Serializable]
     public class EndPoints
     {
+        public const System.String SystemStatus = "/SystemStatus/";
         public const System.String Endpoints = "/endpoints/";
         public const System.String Version = "/version/";
         public const System.String ItemId = "itemId";
@@ -25,6 +26,7 @@ namespace QProtocol.GenericDefines
         public const System.String RecordingStop = "/recording/stop/";
         public const System.String RecordingStartPreRun = "/recording/startPreRun/";
         public const System.String RecordingState = "/recording/state/";
+        public const System.String RecordingStats = "/recording/stats/";
         public const System.String LocalStorageSettings = "/localStorage/settings/";
         public const System.String SystemSettings = "/system/settings/";
         public const System.String SystemSettingsApply = "/system/settings/apply/";

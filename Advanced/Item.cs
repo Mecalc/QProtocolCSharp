@@ -247,6 +247,12 @@ namespace QProtocol.Advanced
                 case Types.ModuleType.WSB42X2:
                     return new InternalModules.WSB.WSB42X2Module(itemInfo);
 
+                case Types.ModuleType.WSB42X5:
+                    return new InternalModules.WSB.WSB42X5Module(itemInfo);
+
+                case Types.ModuleType.WSB42X6:
+                    return new InternalModules.WSB.WSB42X6Module(itemInfo);
+
                 case Types.ModuleType.THM427:
                     return new InternalModules.THM.THM427Module(itemInfo);
 
@@ -271,6 +277,11 @@ namespace QProtocol.Advanced
                 case Types.ModuleType.UTM42T0:
                     return new InternalModules.UTM.UTM42T0Module(itemInfo);
 
+                case Types.ModuleType.UTM42T1:
+                    return new InternalModules.UTM.UTM42T1Module(itemInfo);
+
+                case Types.ModuleType.CHG42S9:
+                    return new InternalModules.CHG.CHG42S9Module(itemInfo);
 
                 default:
                     return itemInfo;
@@ -335,6 +346,12 @@ namespace QProtocol.Advanced
                 case Types.ChannelType.WSB42X2:
                     return new InternalModules.WSB.WSB42X2Channel(itemInfo);
 
+                case Types.ChannelType.WSB42X5:
+                    return new InternalModules.WSB.WSB42X5Channel(itemInfo);
+
+                case Types.ChannelType.WSB42X6:
+                    return new InternalModules.WSB.WSB42X6Channel(itemInfo);
+
                 case Types.ChannelType.CHS42X4:
                     return new InternalModules.CHS.CHS42X4Channel(itemInfo);
 
@@ -358,6 +375,12 @@ namespace QProtocol.Advanced
 					
                 case Types.ChannelType.UTM42T0:
                     return new InternalModules.UTM.UTM42T0Channel(itemInfo);
+
+                case Types.ChannelType.UTM42T1:
+                    return new InternalModules.UTM.UTM42T1Channel(itemInfo);
+
+                case Types.ChannelType.CHG42S9:
+                    return new InternalModules.CHG.CHG42S9Channel(itemInfo);
 
                 default:
                     return itemInfo;

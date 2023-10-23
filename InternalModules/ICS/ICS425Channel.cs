@@ -187,6 +187,11 @@ namespace QProtocol.InternalModules.ICS
             return Setting.ConvertTo<Models.ChannelDeviceInterface.AutoZeroSettings>(jsonObject.Settings);
         }
 
+        public TedsInfo GetTedsInfo()
+        {
+            return RestInterface.Get<TedsInfo>(EndPoints.TedsInfo, HttpParameter.ItemId(ItemId));
+        }
+
         public void PutAutoZeroSettings(Models.ChannelDeviceInterface.AutoZeroSettings settings)
         {
             var jsonObject = new AutoZeroSettings(this)

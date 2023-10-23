@@ -41,6 +41,9 @@ namespace QProtocol.InternalModules.ALO
 
             [RestfulProperties("White Noise Generator")]
             WhiteNoiseGenerator = 5,
+
+            [RestfulProperties("Mirror Left Module")]
+            MirrorLeftModule = 6,
         }
 
         public enum SignalConnection
@@ -233,6 +236,11 @@ namespace QProtocol.InternalModules.ALO
 
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
+        }
+
+        [Serializable]
+        public class MirrorLeftModuleSettings : ISettings
+        {
         }
 
         [Serializable]
