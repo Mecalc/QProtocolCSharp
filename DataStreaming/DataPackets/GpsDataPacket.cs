@@ -6,6 +6,7 @@ using QProtocol.DataStreaming.Headers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace QProtocol.DataStreaming.DataPackets
 {
@@ -24,9 +25,9 @@ namespace QProtocol.DataStreaming.DataPackets
         public GpsChannelHeader GpsChannelHeader { get; }
 
         /// <summary>
-        /// A list of messages received in the Payload.
+        /// The message string received in the Payload.
         /// </summary>
-        public byte[] MessageList { get; }
+        public string Message { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="GpsDataPacket"/> class and copies the data from the payload into the properties.
@@ -38,7 +39,7 @@ namespace QProtocol.DataStreaming.DataPackets
         {
             GenericChannelHeader = genericChannelHeader;
             GpsChannelHeader = gpsChannelHeader;
-            MessageList = reader.ReadBytes((int)genericChannelHeader.ChannelDataSize);
+            Message = Encoding.ASCII.GetString(reader.ReadBytes((int)genericChannelHeader.ChannelDataSize));
             binarySize = genericChannelHeader.ChannelDataSize;
         }
 
