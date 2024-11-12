@@ -14,9 +14,9 @@ using System.Linq;
 namespace QProtocol.InternalChannels.XMC23X
 {
     [Serializable]
-    public class XMC23X : Item
+    public class XMC23XModule : Item
     {
-        public XMC23X(Item itemInfo)
+        public XMC23XModule(Item itemInfo)
             : base(itemInfo)
         {
         }
@@ -83,7 +83,7 @@ namespace QProtocol.InternalChannels.XMC23X
         }
 
         [Serializable]
-        public class XMC23XOperationMode
+        public class XMC23XModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -142,7 +142,7 @@ namespace QProtocol.InternalChannels.XMC23X
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new XMC23XOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new XMC23XModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
@@ -151,7 +151,7 @@ namespace QProtocol.InternalChannels.XMC23X
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<XMC23XOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<XMC23XModuleOperationMode>(jsonObject.Settings).OperationMode;
         }
     }
 }

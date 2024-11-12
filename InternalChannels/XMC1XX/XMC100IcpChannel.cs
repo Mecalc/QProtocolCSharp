@@ -136,14 +136,14 @@ namespace QProtocol.InternalChannels.XMC1XX
 
         public struct DCatSettingsOpenIcpSensorIntegrityLimitAsInt32
         {
-            public const Int32 UpperLimit = 2147483647;
-            public const Int32 LowerLimit = -2147483648;
+            public const Int32 UpperLimit = 32767;
+            public const Int32 LowerLimit = -32768;
         }
 
         public struct DCatSettingsShortedIcpSensorIntegrityLimitAsInt32
         {
-            public const Int32 UpperLimit = 2147483647;
-            public const Int32 LowerLimit = -2147483648;
+            public const Int32 UpperLimit = 32767;
+            public const Int32 LowerLimit = -32768;
         }
 
         [Serializable]

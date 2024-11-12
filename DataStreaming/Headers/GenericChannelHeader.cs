@@ -71,8 +71,13 @@ namespace QProtocol.DataStreaming.Headers
         Analog = 0,
         Tacho = 1,
         CanFd = 2,
+        Gps = 3,
         TriggeredData = 4,
-        TriggeredScope = 5
+        TriggeredStatus = 5,
+        TriggeredStats = 6,
+        Orientation = 7,
+		Inertial = 8,
+		Travel = 9,
     }
 
     /// <summary>

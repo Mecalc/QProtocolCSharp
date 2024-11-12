@@ -28,6 +28,7 @@ namespace QProtocol.GenericDefines
         public const System.String RecordingState = "/recording/state/";
         public const System.String RecordingStats = "/recording/stats/";
         public const System.String LocalStorageSettings = "/localStorage/settings/";
+        public const System.String LocalStorageMeasurementList = "/localStorage/measurement/list/";
         public const System.String SystemSettings = "/system/settings/";
         public const System.String SystemSettingsApply = "/system/settings/apply/";
         public const System.String SystemSettingsResetToDefaults = "/system/settings/resetToDefaults/";
@@ -49,15 +50,5 @@ namespace QProtocol.GenericDefines
         public const System.String BridgeBalanceApply = "/wsb/bridgeBalance/apply/";
         public const System.String BridgeBalanceReset = "/wsb/bridgeBalance/reset/";
         public const System.String InfoPing = "/info/ping/";
-        public const System.String Ali42xTriggerDisable = "/ali42x/trigger/disable/";
-        public const System.String Ali42xTriggerEnable = "/ali42x/trigger/enable/";
-        public const System.String Ali42xTriggerArm = "/ali42x/trigger/arm/";
-        public const System.String Ali42xTriggerSoftwareTrigger = "/ali42x/trigger/softwareTrigger/";
-        public const System.String Ali42xDataTransfer = "/ali42x/data/transfer/";
-        public const System.String Ali42xDataStopTransfer = "/ali42x/data/stopTransfer/";
-        public const System.String Ali42xDataStatus = "/ali42x/data/status/";
-        public const System.String Ali42xDataClearBuffer = "/ali42x/data/clearBuffer/";
-        public const System.String Ali42xOffsetVoltage = "/ali42x/offsetVoltage/";
-        public const System.String Ali42xExcitationVoltage = "/ali42x/excitationVoltage/";
     }
 }

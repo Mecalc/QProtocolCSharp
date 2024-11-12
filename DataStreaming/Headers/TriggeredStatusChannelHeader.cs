@@ -6,30 +6,27 @@ using System.IO;
 
 namespace QProtocol.DataStreaming.Headers
 {
-    public class TriggeredScopeChannelHeader
+    public class TriggeredStatusChannelHeader
     {
-        public const int BinarySize = 24;
+        public const int BinarySize = 20;
 
         public TriggerStatus TriggerStatus { get; }
 
-        public float Min { get; }
+        public int RamConnectionSetup { get; }
 
-        public float Max { get; set; }
+        public int RamStatus { get; }
 
-        public float Rms { get; set; }
+        public int TriggerAddress { get; }
 
-        public float Average { get; set; }
+        public int PreTriggerLength { get; }
 
-        public float StandardDeviation { get; set; }
-
-        public TriggeredScopeChannelHeader(BinaryReader reader)
+        public TriggeredStatusChannelHeader(BinaryReader reader)
         {
             TriggerStatus = (TriggerStatus)reader.ReadUInt32();
-            Min = reader.ReadSingle();
-            Max = reader.ReadSingle();
-            Rms = reader.ReadSingle();
-            Average = reader.ReadSingle();
-            StandardDeviation = reader.ReadSingle();
+            RamConnectionSetup = reader.ReadInt32();
+            RamStatus = reader.ReadInt32();
+            TriggerAddress = reader.ReadInt32();
+            PreTriggerLength = reader.ReadInt32();
         }
     }
 

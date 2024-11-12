@@ -15,7 +15,7 @@ namespace QProtocol.Advanced
     /// By implementing the <see cref="IRestfulInterface"/>, this class will be able to send and receive requests directly from QServer.
     /// </summary>
     [Serializable]
-    public class Item : ItemInfo
+    public class Item: ItemInfo
     {
         public IRestfulInterface RestInterface { get; private set; }
 
@@ -47,7 +47,7 @@ namespace QProtocol.Advanced
         internal Item(SystemSettings systemSettings, IRestfulInterface restfulInterface)
             : base(systemSettings.ItemId, systemSettings.ItemName, systemSettings.ItemNameIdentifier, systemSettings.ItemType, systemSettings.ItemTypeIdentifier)
         {
-            if (systemSettings == null)
+            if(systemSettings == null)
             {
                 throw new ArgumentNullException("SystemSettings argument may not be null.");
             }
@@ -66,7 +66,7 @@ namespace QProtocol.Advanced
         /// <returns>An instance of <see cref="Item"/> representing the QServer system as a tree structure.</returns>
         public static Item Create(IRestfulInterface restfulInterface)
         {
-            if (restfulInterface == null)
+            if(restfulInterface == null)
             {
                 throw new ArgumentNullException(nameof(restfulInterface));
             }
@@ -85,7 +85,7 @@ namespace QProtocol.Advanced
         /// <returns>A List of instances of <see cref="Item"/> representing the QServer system.</returns>
         public static List<Item> CreateList(IRestfulInterface restfulInterface)
         {
-            if (restfulInterface == null)
+            if(restfulInterface == null)
             {
                 throw new ArgumentNullException(nameof(restfulInterface));
             }
@@ -148,7 +148,7 @@ namespace QProtocol.Advanced
         internal void RegisterInterfaceForChildren(Item itemInfo, IRestfulInterface commandInterfaceReference)
         {
             itemInfo.RestInterface = commandInterfaceReference;
-            foreach (var child in itemInfo.Children)
+            foreach(var child in itemInfo.Children)
             {
                 RegisterInterfaceForChildren(child, commandInterfaceReference);
             }
@@ -159,12 +159,12 @@ namespace QProtocol.Advanced
             var nodes = new Stack<Item>();
             nodes.Push(this);
 
-            while (nodes.Count > 0)
+            while(nodes.Count > 0)
             {
                 var node = nodes.Pop();
                 yield return node;
 
-                for (int nodeIndex = node.Children.Count - 1; nodeIndex >= 0; nodeIndex--)
+                for(int nodeIndex = node.Children.Count - 1; nodeIndex >= 0; nodeIndex--)
                 {
                     nodes.Push(node.Children[nodeIndex]);
                 }
@@ -173,7 +173,7 @@ namespace QProtocol.Advanced
 
         private static Item CastToDefinedItem(Item itemInfo)
         {
-            switch ((Types.ItemType)itemInfo.ItemTypeIdentifier)
+            switch((Types.ItemType)itemInfo.ItemTypeIdentifier)
             {
                 case Types.ItemType.Controller:
                     itemInfo = new Controllers.Controller(itemInfo);
@@ -196,7 +196,7 @@ namespace QProtocol.Advanced
                     throw new NotImplementedException($"Item Type {itemInfo.ItemType} ({itemInfo.ItemTypeIdentifier}) is not supported.");
             }
 
-            for (int childIndex = 0; childIndex < itemInfo.Children.Count; childIndex++)
+            for(int childIndex = 0; childIndex < itemInfo.Children.Count; childIndex++)
             {
                 itemInfo.Children[childIndex] = CastToDefinedItem(itemInfo.Children[childIndex]);
             }
@@ -206,7 +206,7 @@ namespace QProtocol.Advanced
 
         private static Item CastToModule(Item itemInfo)
         {
-            switch ((Types.ModuleType)itemInfo.ItemNameIdentifier)
+            switch((Types.ModuleType)itemInfo.ItemNameIdentifier)
             {
                 case Types.ModuleType.ICP4211:
                     return new InternalModules.ICP.ICP4211Module(itemInfo);
@@ -268,12 +268,9 @@ namespace QProtocol.Advanced
                 case Types.ModuleType.XMC100:
                     return new InternalChannels.XMC1XX.XMC100Module(itemInfo);
 
-                case Types.ModuleType.ALI42X1:
-                    return new InternalModules.ALI.ALI42X1Module(itemInfo);
+                case Types.ModuleType.GPS42S6:
+                    return new InternalModules.GPS.GPS42S6Module(itemInfo);
 
-                case Types.ModuleType.ALI42X2:
-                    return new InternalModules.ALI.ALI42X2Module(itemInfo);
-					
                 case Types.ModuleType.UTM42T0:
                     return new InternalModules.UTM.UTM42T0Module(itemInfo);
 
@@ -290,7 +287,7 @@ namespace QProtocol.Advanced
 
         private static Item CastToChannel(Item itemInfo)
         {
-            switch ((Types.ChannelType)itemInfo.ItemNameIdentifier)
+            switch((Types.ChannelType)itemInfo.ItemNameIdentifier)
             {
                 case Types.ChannelType.CAN42S2:
                     return new InternalModules.CAN.CAN42S2Channel(itemInfo);
@@ -300,6 +297,9 @@ namespace QProtocol.Advanced
 
                 case Types.ChannelType.XMC237CanFd:
                     return new InternalChannels.XMC237.XMC237CanFdChannel(itemInfo);
+
+                case Types.ChannelType.XMC237Gps:
+                    return new InternalChannels.XMC237.XMC237GpsChannel(itemInfo);
 
                 case Types.ChannelType.ICP4211:
                     return new InternalModules.ICP.ICP4211Channel(itemInfo);
@@ -367,12 +367,9 @@ namespace QProtocol.Advanced
                 case Types.ChannelType.SCC42T5:
                     return new InternalModules.SCC.SCC42T5Channel(itemInfo);
 
-                case Types.ChannelType.ALI42X1:
-                    return new InternalModules.ALI.ALI42X1Channel(itemInfo);
+                case Types.ChannelType.GPS42S6:
+                    return new InternalModules.GPS.GPS42S6Channel(itemInfo);
 
-                case Types.ChannelType.ALI42X2:
-                    return new InternalModules.ALI.ALI42X2Channel(itemInfo);
-					
                 case Types.ChannelType.UTM42T0:
                     return new InternalModules.UTM.UTM42T0Channel(itemInfo);
 
@@ -396,7 +393,7 @@ namespace QProtocol.Advanced
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 RestInterface?.Dispose();
             }

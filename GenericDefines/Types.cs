@@ -85,8 +85,8 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("WSB42X6")]
             WSB42X6 = 230,
 
-            [RestfulProperties("GPS42S5")]
-            GPS42S5 = 162,
+            [RestfulProperties("GPS42S6")]
+            GPS42S6 = 163,
 
             [RestfulProperties("THM427")]
             THM427 = 170,
@@ -99,12 +99,6 @@ namespace QProtocol.GenericDefines
 
             [RestfulProperties("UTM42T1")]
             UTM42T1 = 193,
-
-            [RestfulProperties("ALI42X1")]
-            ALI42X1 = 239,
-
-            [RestfulProperties("ALI42X2")]
-            ALI42X2 = 238,
 
             [RestfulProperties("Empty")]
             Empty = 240,
@@ -137,7 +131,7 @@ namespace QProtocol.GenericDefines
             SC42S8 = 10080,
 
             [RestfulProperties("SC45")]
-            SC450 = 10087,
+            SC451 = 10087,
 
             [RestfulProperties("SC25")]
             SC250 = 10088,
@@ -166,8 +160,20 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("CAN42S2")]
             CAN42S2 = 0,
 
+            [RestfulProperties("SNav10 Location")]
+            SNav10Location = 5,
+
+            [RestfulProperties("SNav10 Orientation")]
+            SNav10Orientation = 6,
+
             [RestfulProperties("XMC237 ICP")]
             XMC237Icp = 7,
+
+            [RestfulProperties("SNav10 Inertial")]
+            SNav10Inertial = 8,
+
+            [RestfulProperties("SNav10 Travel")]
+            SNav10Travel = 9,
 
             [RestfulProperties("ICP4211")]
             ICP4211 = 11,
@@ -244,12 +250,6 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("MIC42X7")]
             MIC42X7 = 47,
 
-            [RestfulProperties("ALI42X1")]
-            ALI42X1 = 48,
-
-            [RestfulProperties("ALI42X2")]
-            ALI42X2 = 49,
-
             [RestfulProperties("UTM42T1")]
             UTM42T1 = 50,
 
@@ -258,6 +258,9 @@ namespace QProtocol.GenericDefines
 
             [RestfulProperties("WSB42X6")]
             WSB42X6 = 52,
+
+            [RestfulProperties("GPS42S6")]
+            GPS42S6 = 53,
 
             [RestfulProperties("CHG42S9")]
             CHG42S9 = 54,

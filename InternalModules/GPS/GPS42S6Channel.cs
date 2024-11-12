@@ -11,17 +11,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ALI
+namespace QProtocol.InternalModules.GPS
 {
     [Serializable]
-    public class ALI42X2Module : Item
+    public class GPS42S6Channel : DataChannelItem
     {
-        public ALI42X2Module(Item itemInfo)
+        public GPS42S6Channel(Item itemInfo)
             : base(itemInfo)
         {
         }
 
-        public const System.Int32 NumberOfChannelsOnModule = 1;
+        public const System.Int32 MaximumNumberOfActiveMessages = 20;
 
         public enum OperationMode
         {
@@ -32,10 +32,40 @@ namespace QProtocol.InternalModules.ALI
             Enabled = 1,
         }
 
-        public enum DownloadRate
+        public enum MessageRate
         {
-            [RestfulProperties("MSR Divide by 1", 1, "")]
-            MsrDivideBy1 = 0,
+            [RestfulProperties("1 Hz", 1, "Hz")]
+            _1Hz = 0,
+
+            [RestfulProperties("4 Hz", 4, "Hz")]
+            _4Hz = 1,
+        }
+
+        public enum Platform
+        {
+            [RestfulProperties("Stationary")]
+            Stationary = 0,
+
+            [RestfulProperties("Pedestrian")]
+            Pedestrian = 1,
+
+            [RestfulProperties("Automotive")]
+            Automotive = 2,
+        }
+
+        public enum AcquisitionMode
+        {
+            [RestfulProperties("Auto")]
+            Auto = 0,
+
+            [RestfulProperties("Normal")]
+            Normal = 1,
+
+            [RestfulProperties("Fast")]
+            Fast = 2,
+
+            [RestfulProperties("High Sensitivity")]
+            HighSensitivity = 3,
         }
 
         public interface ISettings
@@ -43,7 +73,7 @@ namespace QProtocol.InternalModules.ALI
         }
 
         [Serializable]
-        public class ALI42X2ModuleOperationMode
+        public class GPS42S6ChannelOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -52,6 +82,15 @@ namespace QProtocol.InternalModules.ALI
         [Serializable]
         public class EnabledSettings : ISettings
         {
+
+            [RestfulProperties("Message Rate")]
+            public MessageRate MessageRate { get; set; } = MessageRate._1Hz;
+
+            [RestfulProperties("Platform")]
+            public Platform Platform { get; set; } = Platform.Stationary;
+
+            [RestfulProperties("Acquisition Mode")]
+            public AcquisitionMode AcquisitionMode { get; set; } = AcquisitionMode.Auto;
         }
 
         [Serializable]
@@ -78,7 +117,7 @@ namespace QProtocol.InternalModules.ALI
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALI42X2ModuleOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<GPS42S6ChannelOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public SettingsCollection<T> GetItemSettings<T>()
@@ -96,7 +135,7 @@ namespace QProtocol.InternalModules.ALI
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALI42X2ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new GPS42S6ChannelOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
