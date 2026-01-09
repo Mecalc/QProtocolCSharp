@@ -47,27 +47,6 @@ namespace QProtocol.InternalChannels.XMC237
             _10Hz = 3,
         }
 
-        public enum MessageClass
-        {
-            [RestfulProperties("NMEA")]
-            NMEA = 0,
-        }
-
-        public enum NmeaMessageId
-        {
-            [RestfulProperties("NMEA GGA")]
-            Gga = 0,
-
-            [RestfulProperties("NMEA GSA")]
-            Gsa = 1,
-
-            [RestfulProperties("NMEA RMC")]
-            Rmc = 2,
-
-            [RestfulProperties("NMEA VTG")]
-            Vtg = 3,
-        }
-
         public interface ISettings
         {
         }
@@ -83,20 +62,8 @@ namespace QProtocol.InternalChannels.XMC237
         public class EnabledSettings : ISettings
         {
 
-            [RestfulProperties("Message rate")]
+            [RestfulProperties("Message Rate")]
             public MessageRate MessageRate { get; set; } = MessageRate._1Hz;
-
-            [RestfulProperties("NMEA GGA")]
-            public GenericDefines.Generic.Status NmeaGga { get; set; } = GenericDefines.Generic.Status.Disabled;
-
-            [RestfulProperties("NMEA GSA")]
-            public GenericDefines.Generic.Status NmeaGsa { get; set; } = GenericDefines.Generic.Status.Disabled;
-
-            [RestfulProperties("NMEA RMC")]
-            public GenericDefines.Generic.Status NmeaRmc { get; set; } = GenericDefines.Generic.Status.Disabled;
-
-            [RestfulProperties("NMEA VTG")]
-            public GenericDefines.Generic.Status NmeaVtg { get; set; } = GenericDefines.Generic.Status.Disabled;
         }
 
         [Serializable]

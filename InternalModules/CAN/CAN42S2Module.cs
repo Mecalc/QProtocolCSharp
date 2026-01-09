@@ -48,10 +48,42 @@ namespace QProtocol.InternalModules.CAN
         {
         }
 
+        [Serializable]
+        public class SettingsCollection<T>
+            where T : ISettings
+        {
+            public T Settings { get; set; }
+
+            public Data Data { get; set; }
+        }
+
+
+        public SettingsCollection<T> GetItemSettingsDefaults<T>()
+            where T : ISettings
+        {
+            var jsonObject = base.GetItemSettingsDefaults();
+            return new SettingsCollection<T>
+            {
+                Settings = jsonObject.ConvertToSettings<T>(),
+                Data = jsonObject.ConvertToData()
+            };
+        }
+
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
             return Setting.ConvertTo<CAN42S2ModuleOperationMode>(jsonObject.Settings).OperationMode;
+        }
+
+        public SettingsCollection<T> GetItemSettings<T>()
+            where T : ISettings
+        {
+            var jsonObject = base.GetItemSettings();
+            return new SettingsCollection<T>
+            {
+                Settings = jsonObject.ConvertToSettings<T>(),
+                Data = jsonObject.ConvertToData()
+            };
         }
 
         public void PutItemOperationMode(OperationMode operationMode)
@@ -62,6 +94,15 @@ namespace QProtocol.InternalModules.CAN
             };
             
             base.PutItemOperationMode(operationModeSettings);
+        }
+
+        public void PutItemSettings<T>(SettingsCollection<T> settings)
+            where T : ISettings
+        {
+            var jsonObject = new ItemSettings(this);
+            jsonObject.UpdateFromSettings(settings.Settings);
+            jsonObject.UpdateFromData(settings.Data);
+            base.PutItemSettings(jsonObject);
         }
     }
 }

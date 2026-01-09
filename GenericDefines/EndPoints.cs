@@ -28,6 +28,7 @@ namespace QProtocol.GenericDefines
         public const System.String RecordingState = "/recording/state/";
         public const System.String RecordingStats = "/recording/stats/";
         public const System.String LocalStorageSettings = "/localStorage/settings/";
+        public const System.String LocalStorageMeasurementList = "/localStorage/measurement/list/";
         public const System.String SystemSettings = "/system/settings/";
         public const System.String SystemSettingsApply = "/system/settings/apply/";
         public const System.String SystemSettingsResetToDefaults = "/system/settings/resetToDefaults/";
