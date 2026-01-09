@@ -38,14 +38,14 @@ namespace QProtocol.GenericDefines
 
         public enum DataResolution
         {
+            [RestfulProperties("16 bit")]
+            _16b = 0,
+
             [RestfulProperties("32 bit")]
-            _32b = 0,
+            _32b = 1,
 
             [RestfulProperties("24 bit")]
-            _24b = 1,
-
-            [RestfulProperties("16 bit")]
-            _16b = 2,
+            _24b = 2,
         }
 
         public enum SettingState

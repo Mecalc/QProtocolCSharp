@@ -110,6 +110,9 @@ namespace QProtocol.InternalModules.CHS
         {
             [RestfulProperties("AC With 1 Hz Filter")]
             AcWith1HzFilter = 0,
+
+            [RestfulProperties("AC")]
+            Ac = 1,
         }
 
         public interface ISettings

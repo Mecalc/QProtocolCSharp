@@ -54,11 +54,20 @@ namespace QProtocol.DeviceFeatures
             public const Single LowerLimit = 0F;
         }
 
+        public struct SettingsRecordingDurationInSecondsAsUInt32
+        {
+            public const UInt32 UpperLimit = 4294967295;
+            public const UInt32 LowerLimit = 0;
+        }
+
         [Serializable]
         public class Settings
         {
             [RestfulProperties("Pre-run Duration")]
             public Single PreRunDurationInSeconds { get; set; }
+
+            [RestfulProperties("Recording Duration")]
+            public UInt32 RecordingDurationInSeconds { get; set; }
 
             [RestfulProperties("Measurement Name")]
             public String MeasurementName { get; set; }
@@ -85,6 +94,19 @@ namespace QProtocol.DeviceFeatures
 
             [RestfulProperties("UsagePercentage")]
             public UInt32 UsagePercentage { get; set; }
+
+            [RestfulProperties("RecordingDuration")]
+            public UInt32 RecordingDuration { get; set; }
+
+            [RestfulProperties("RecordingSecondsLeft")]
+            public UInt32 RecordingSecondsLeft { get; set; }
+        }
+
+        [Serializable]
+        public class Measurement
+        {
+            [RestfulProperties("Name")]
+            public String Name { get; set; }
         }
     }
 }

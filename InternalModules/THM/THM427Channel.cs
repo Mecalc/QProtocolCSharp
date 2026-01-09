@@ -45,8 +45,11 @@ namespace QProtocol.InternalModules.THM
             [RestfulProperties("Thermocouple Type U Input")]
             ThermocoupleTypeUInput = 6,
 
+            [RestfulProperties("Thermocouple Type N Input")]
+            ThermocoupleTypeNInput = 7,
+
             [RestfulProperties("PT100 Input")]
-            Pt100Input = 7,
+            Pt100Input = 8,
         }
 
         public enum VoltageRange
@@ -149,6 +152,17 @@ namespace QProtocol.InternalModules.THM
 
         [Serializable]
         public class Pt100Input : ISettings
+        {
+
+            [RestfulProperties("Voltage Range")]
+            public TemperatureModeVoltageRange TemperatureModeVoltageRange { get; set; } = TemperatureModeVoltageRange._100mV;
+
+            [RestfulProperties("Temperature SI Unit")]
+            public TemperatureSIUnits TemperatureSIUnits { get; set; } = TemperatureSIUnits.Celsius;
+        }
+
+        [Serializable]
+        public class ThermocoupleTypeNInput : ISettings
         {
 
             [RestfulProperties("Voltage Range")]
