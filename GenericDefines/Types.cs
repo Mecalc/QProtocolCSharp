@@ -58,6 +58,9 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("ICT426")]
             ICT426 = 218,
 
+            [RestfulProperties("ICT454")]
+            ICT454 = 189,
+
             [RestfulProperties("TAC221")]
             TAC221 = 222,
 
@@ -67,14 +70,29 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("DCH42S2")]
             DCH42S2 = 149,
 
+            [RestfulProperties("DCH450")]
+            DCH450 = 186,
+
             [RestfulProperties("MIC42X7")]
             MIC42X7 = 180,
 
             [RestfulProperties("CAN42S2")]
             CAN42S2 = 157,
 
+            [RestfulProperties("CAN450")]
+            CAN450 = 167,
+
+            [RestfulProperties("FLX422")]
+            FLX422 = 155,
+
+            [RestfulProperties("FLX450")]
+            FLX450 = 166,
+
             [RestfulProperties("ALO42S4")]
             ALO42S4 = 151,
+
+            [RestfulProperties("ALO450")]
+            ALO450 = 196,
 
             [RestfulProperties("WSB42X2")]
             WSB42X2 = 227,
@@ -85,11 +103,17 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("WSB42X6")]
             WSB42X6 = 230,
 
-            [RestfulProperties("GPS42S5")]
-            GPS42S5 = 162,
+            [RestfulProperties("GPS42S6")]
+            GPS42S6 = 163,
+
+            [RestfulProperties("GPS450")]
+            GPS450 = 164,
 
             [RestfulProperties("THM427")]
             THM427 = 170,
+
+            [RestfulProperties("THM450")]
+            THM450 = 171,
 
             [RestfulProperties("CHS42X4")]
             CHS42X4 = 184,
@@ -100,11 +124,20 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("UTM42T1")]
             UTM42T1 = 193,
 
-            [RestfulProperties("ALI42X1")]
-            ALI42X1 = 239,
+            [RestfulProperties("UTM450")]
+            UTM450 = 194,
 
-            [RestfulProperties("ALI42X2")]
-            ALI42X2 = 238,
+            [RestfulProperties("ICS450")]
+            ICS450 = 232,
+
+            [RestfulProperties("ICP450")]
+            ICP450 = 188,
+
+            [RestfulProperties("ICM450")]
+            ICM450 = 233,
+
+            [RestfulProperties("VIM450")]
+            VIM450 = 235,
 
             [RestfulProperties("Empty")]
             Empty = 240,
@@ -136,11 +169,14 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("SC42S G2")]
             SC42S8 = 10080,
 
+            [RestfulProperties("SC42S G2")]
+            SC421S0 = 10086,
+
             [RestfulProperties("SC45")]
-            SC450 = 10087,
+            SC451 = 10087,
 
             [RestfulProperties("SC25")]
-            SC250 = 10088,
+            SC251 = 10088,
 
             [RestfulProperties("SC10")]
             SC104 = 10101,
@@ -166,8 +202,20 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("CAN42S2")]
             CAN42S2 = 0,
 
+            [RestfulProperties("SNav10 Location")]
+            SNav10Location = 5,
+
+            [RestfulProperties("SNav10 Orientation")]
+            SNav10Orientation = 6,
+
             [RestfulProperties("XMC237 ICP")]
             XMC237Icp = 7,
+
+            [RestfulProperties("SNav10 Inertial")]
+            SNav10Inertial = 8,
+
+            [RestfulProperties("SNav10 Travel")]
+            SNav10Travel = 9,
 
             [RestfulProperties("ICP4211")]
             ICP4211 = 11,
@@ -244,12 +292,6 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("MIC42X7")]
             MIC42X7 = 47,
 
-            [RestfulProperties("ALI42X1")]
-            ALI42X1 = 48,
-
-            [RestfulProperties("ALI42X2")]
-            ALI42X2 = 49,
-
             [RestfulProperties("UTM42T1")]
             UTM42T1 = 50,
 
@@ -259,8 +301,62 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("WSB42X6")]
             WSB42X6 = 52,
 
+            [RestfulProperties("GPS42S6")]
+            GPS42S6 = 53,
+
             [RestfulProperties("CHG42S9")]
             CHG42S9 = 54,
+
+            [RestfulProperties("ALO450")]
+            ALO450 = 55,
+
+            [RestfulProperties("DCH450")]
+            DCH450 = 56,
+
+            [RestfulProperties("ICS450")]
+            ICS450 = 57,
+
+            [RestfulProperties("ICM450")]
+            ICM450 = 58,
+
+            [RestfulProperties("CHM450")]
+            CHM450 = 59,
+
+            [RestfulProperties("WSB450")]
+            WSB450 = 60,
+
+            [RestfulProperties("THM450")]
+            THM450 = 61,
+
+            [RestfulProperties("GPS450")]
+            GPS450 = 62,
+
+            [RestfulProperties("CAN450")]
+            CAN450 = 63,
+
+            [RestfulProperties("FLX450")]
+            FLX450 = 64,
+
+            [RestfulProperties("UTM450")]
+            UTM450 = 68,
+
+            [RestfulProperties("FLX422")]
+            FLX422 = 75,
+
+            [RestfulProperties("ICP450")]
+            ICP450 = 76,
+
+            [RestfulProperties("VIM450")]
+            VIM450 = 77,
+
+            [RestfulProperties("ICT454 ICP")]
+            ICT454Icp = 78,
+
+            [RestfulProperties("ICT454 SCOPE")]
+            ICT454Scope = 79,
+
+            [RestfulProperties("ICT454 TACHO")]
+            ICT454Tacho = 80,
 
             [RestfulProperties("Unsupported")]
             Unsupported = 253,

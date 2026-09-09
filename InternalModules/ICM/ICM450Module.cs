@@ -11,17 +11,65 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalChannels.XMC23X
+namespace QProtocol.InternalModules.ICM
 {
     [Serializable]
-    public class XMC23X : Item
+    public class ICM450Module : Item
     {
-        public XMC23X(Item itemInfo)
+        public ICM450Module(Item itemInfo)
             : base(itemInfo)
         {
         }
 
-        public const System.Int32 MaxNumberOfChannels = 63;
+        public const System.Int32 NumberOfChannelsOnModule = 4;
+
+        public enum SampleRate
+        {
+            [RestfulProperties("MSR Divide by 1", 1, "")]
+            MsrDivideBy1 = 0,
+
+            [RestfulProperties("MSR Divide by 2", 2, "")]
+            MsrDivideBy2 = 1,
+
+            [RestfulProperties("MSR Divide by 4", 4, "")]
+            MsrDivideBy4 = 2,
+
+            [RestfulProperties("MSR Divide by 8", 8, "")]
+            MsrDivideBy8 = 3,
+
+            [RestfulProperties("MSR Divide by 16", 16, "")]
+            MsrDivideBy16 = 4,
+
+            [RestfulProperties("MSR Divide by 32", 32, "")]
+            MsrDivideBy32 = 5,
+
+            [RestfulProperties("MSR Divide by 64", 64, "")]
+            MsrDivideBy64 = 6,
+
+            [RestfulProperties("MSR Divide by 128", 128, "")]
+            MsrDivideBy128 = 7,
+
+            [RestfulProperties("MSR Divide by 256", 256, "")]
+            MsrDivideBy256 = 8,
+        }
+
+        public enum Grounding
+        {
+            [RestfulProperties("Floating")]
+            Floating = 0,
+
+            [RestfulProperties("Grounded")]
+            Grounded = 1,
+        }
+
+        public enum CalibrationDacOutputOnLemo
+        {
+            [RestfulProperties("Off")]
+            Off = 0,
+
+            [RestfulProperties("On")]
+            On = 1,
+        }
 
         public enum OperationMode
         {
@@ -32,50 +80,11 @@ namespace QProtocol.InternalChannels.XMC23X
             Enabled = 1,
         }
 
-        public enum DevicePresence
-        {
-            [RestfulProperties("Absent")]
-            Absent = 0,
-
-            [RestfulProperties("Present")]
-            Present = 1,
-        }
-
-        public enum DeviceType
-        {
-            [RestfulProperties("Invalid")]
-            Invalid = 0,
-
-            [RestfulProperties("Config")]
-            Config = 1,
-
-            [RestfulProperties("CAN FD")]
-            CanFd = 2,
-
-            [RestfulProperties("GPS")]
-            Gps = 3,
-
-            [RestfulProperties("Headset PCM Stereo")]
-            HeadsetPcmStereo = 4,
-        }
-
-        public struct ConfiguredChannelsIDAsUInt32
-        {
-            public const UInt32 UpperLimit = 4294967295;
-            public const UInt32 LowerLimit = 0;
-        }
-
         [Serializable]
-        public class ConfiguredChannels
+        public class UserData
         {
-            [RestfulProperties("Channel ID")]
-            public UInt32 ID { get; set; }
-
-            [RestfulProperties("Device Type")]
-            public DeviceType XMC23XDeviceType { get; set; }
-
-            [RestfulProperties("Device Presence")]
-            public DevicePresence DevicePresence { get; set; }
+            [RestfulProperties("Data")]
+            public System.Collections.Generic.List<Byte> Data { get; set; }
         }
 
         public interface ISettings
@@ -83,7 +92,7 @@ namespace QProtocol.InternalChannels.XMC23X
         }
 
         [Serializable]
-        public class XMC23XOperationMode
+        public class ICM450ModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -93,8 +102,11 @@ namespace QProtocol.InternalChannels.XMC23X
         public class EnabledSettings : ISettings
         {
 
-            [RestfulProperties("")]
-            public Int32 Reserved { get; set; }
+            [RestfulProperties("Sample Rate")]
+            public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy256;
+
+            [RestfulProperties("Grounding")]
+            public Grounding Grounding { get; set; } = Grounding.Floating;
         }
 
         [Serializable]
@@ -138,20 +150,20 @@ namespace QProtocol.InternalChannels.XMC23X
             };
         }
 
+        public new OperationMode GetItemOperationMode()
+        {
+            var jsonObject = base.GetItemOperationMode();
+            return Setting.ConvertTo<ICM450ModuleOperationMode>(jsonObject.Settings).OperationMode;
+        }
+
         public void PutItemOperationMode(OperationMode operationMode)
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new XMC23XOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new ICM450ModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
-        }
-
-        public new OperationMode GetItemOperationMode()
-        {
-            var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<XMC23XOperationMode>(jsonObject.Settings).OperationMode;
         }
     }
 }

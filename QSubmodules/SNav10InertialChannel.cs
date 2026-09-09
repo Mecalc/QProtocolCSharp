@@ -11,17 +11,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ALI
+namespace QProtocol.QSubmodules
 {
     [Serializable]
-    public class ALI42X1Module : Item
+    public class SNav10InertialChannel : DataChannelItem
     {
-        public ALI42X1Module(Item itemInfo)
+        public SNav10InertialChannel(Item itemInfo)
             : base(itemInfo)
         {
         }
 
-        public const System.Int32 NumberOfChannelsOnModule = 1;
 
         public enum OperationMode
         {
@@ -32,18 +31,12 @@ namespace QProtocol.InternalModules.ALI
             Enabled = 1,
         }
 
-        public enum DownloadRate
-        {
-            [RestfulProperties("MSR Divide by 1", 1, "")]
-            MsrDivideBy1 = 0,
-        }
-
         public interface ISettings
         {
         }
 
         [Serializable]
-        public class ALI42X1ModuleOperationMode
+        public class SNav10InertialChannelOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -78,7 +71,7 @@ namespace QProtocol.InternalModules.ALI
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALI42X1ModuleOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<SNav10InertialChannelOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public SettingsCollection<T> GetItemSettings<T>()
@@ -96,7 +89,7 @@ namespace QProtocol.InternalModules.ALI
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALI42X1ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new SNav10InertialChannelOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);

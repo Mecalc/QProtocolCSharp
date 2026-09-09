@@ -71,8 +71,11 @@ namespace QProtocol.DataStreaming.Headers
         Analog = 0,
         Tacho = 1,
         CanFd = 2,
-        TriggeredData = 4,
-        TriggeredScope = 5
+        Gps = 3,
+        Orientation = 7,
+        Inertial = 8,
+        Travel = 9,
+        FlexRay = 10
     }
 
     /// <summary>
@@ -103,11 +106,10 @@ namespace QProtocol.DataStreaming.Headers
     }
 
     /// <summary>
-    /// An enum listing the supported sample types for a Trigger channel.
+    /// An enum listing the supported sample types for a FlexRay Channel.
     /// </summary>
-    public enum TriggeredSampleTypes
+    public enum FlexRaySampleTypes
     {
-        Float = 0,
-        _24BitFixedPoint,
+        BinaryFlexRayMessage = 0,
     }
 }

@@ -56,5 +56,55 @@ namespace QProtocol.Models
             [RestfulProperties("Auto-Zero Average Time")]
             public AutoZeroAverageTime AutoZeroAverageTime { get; set; }
         }
+
+        [Serializable]
+        public class SnapshotSettings
+        {
+            [RestfulProperties("StreamingEnabled")]
+            public Boolean StreamingEnabled { get; set; }
+        }
+
+        public struct CalibrationValuesChannelNumberAsInt32
+        {
+            public const Int32 UpperLimit = 8;
+            public const Int32 LowerLimit = 0;
+        }
+
+        public struct CalibrationValuesOffsetCorrectionAsSingle
+        {
+            public const Single UpperLimit = 10F;
+            public const Single LowerLimit = -10F;
+        }
+
+        public struct CalibrationValuesGainCorrectionMsr131072AsSingle
+        {
+            public const Single UpperLimit = 10F;
+            public const Single LowerLimit = -10F;
+        }
+
+        public struct CalibrationValuesGainCorrectionMsr204800AsSingle
+        {
+            public const Single UpperLimit = 10F;
+            public const Single LowerLimit = -10F;
+        }
+
+        [Serializable]
+        public class CalibrationValues
+        {
+            [RestfulProperties("Channel Number")]
+            public Int32 ChannelNumber { get; set; }
+
+            [RestfulProperties("DAC Voltage Range")]
+            public ModuleDevice.DacVoltage DacVoltageRange { get; set; }
+
+            [RestfulProperties("Offset Correction")]
+            public Single OffsetCorrection { get; set; }
+
+            [RestfulProperties("Gain Correction at 131072")]
+            public Single GainCorrectionMsr131072 { get; set; }
+
+            [RestfulProperties("Gain Correction at 204800")]
+            public Single GainCorrectionMsr204800 { get; set; }
+        }
     }
 }

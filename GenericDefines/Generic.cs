@@ -92,5 +92,17 @@ namespace QProtocol.GenericDefines
             [RestfulProperties("Data")]
             Data = 0,
         }
+
+        public enum Endianness
+        {
+            [RestfulProperties("Native", 0, "")]
+            Native = 0,
+
+            [RestfulProperties("Big endian", 1234, "")]
+            BigEndian = 1,
+
+            [RestfulProperties("Little endian", 4321, "")]
+            LittleEndian = 2,
+        }
     }
 }

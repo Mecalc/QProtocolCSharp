@@ -11,28 +11,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ALO
+namespace QProtocol.InternalModules.ICT
 {
     [Serializable]
-    public class ALO42S4Module : Item
+    public class ICT454Module : Item
     {
-        public ALO42S4Module(Item itemInfo)
+        public ICT454Module(Item itemInfo)
             : base(itemInfo)
         {
         }
 
         public const System.Int32 NumberOfChannelsOnModule = 4;
+        public const System.Int32 NumberOfIcpChannelsOnModule = 2;
+        public const System.Int32 NumberOfTachoChannelsOnModule = 2;
+        public const System.Int32 IndexOfTheFirstIcpChannel = 0;
+        public const System.Int32 IndexOfTheFirstTachoChannel = 4;
+        public const System.Int32 IndexOfTheFirstScopeChannel = 2;
 
-        public enum Grounding
-        {
-            [RestfulProperties("Floating")]
-            Floating = 0,
-
-            [RestfulProperties("Grounded")]
-            Grounded = 1,
-        }
-
-        public enum SampleRate
+        public enum IcpChannelSampleRate
         {
             [RestfulProperties("MSR Divide by 1", 1, "")]
             MsrDivideBy1 = 0,
@@ -54,6 +50,21 @@ namespace QProtocol.InternalModules.ALO
 
             [RestfulProperties("MSR Divide by 64", 64, "")]
             MsrDivideBy64 = 6,
+
+            [RestfulProperties("MSR Divide by 128", 128, "")]
+            MsrDivideBy128 = 7,
+
+            [RestfulProperties("MSR Divide by 256", 256, "")]
+            MsrDivideBy256 = 8,
+        }
+
+        public enum Grounding
+        {
+            [RestfulProperties("Floating")]
+            Floating = 0,
+
+            [RestfulProperties("Grounded")]
+            Grounded = 1,
         }
 
         public enum OperationMode
@@ -63,12 +74,37 @@ namespace QProtocol.InternalModules.ALO
 
             [RestfulProperties("Enabled")]
             Enabled = 1,
+        }
 
-            [RestfulProperties("Mirror Left Module")]
-            MirrorLeftModule = 2,
+        public enum LedState
+        {
+            [RestfulProperties("Off")]
+            Off = 0,
 
-            [RestfulProperties("Arbitrary Waveform")]
-            ArbitraryWaveform = 3,
+            [RestfulProperties("Red")]
+            Red = 1,
+
+            [RestfulProperties("Green")]
+            Green = 2,
+
+            [RestfulProperties("Blue")]
+            Blue = 3,
+
+            [RestfulProperties("Purple")]
+            Purple = 4,
+
+            [RestfulProperties("Orange")]
+            Orange = 5,
+
+            [RestfulProperties("Flashing")]
+            Flashing = 6,
+        }
+
+        [Serializable]
+        public class UserData
+        {
+            [RestfulProperties("Data")]
+            public System.Collections.Generic.List<Byte> Data { get; set; }
         }
 
         public interface ISettings
@@ -76,7 +112,7 @@ namespace QProtocol.InternalModules.ALO
         }
 
         [Serializable]
-        public class ALO42S4ModuleOperationMode
+        public class ICT454ModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -86,24 +122,8 @@ namespace QProtocol.InternalModules.ALO
         public class EnabledSettings : ISettings
         {
 
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-        }
-
-        [Serializable]
-        public class MirrorLeftModuleSettings : ISettings
-        {
-
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-        }
-
-        [Serializable]
-        public class ArbitraryWaveformSettings : ISettings
-        {
-
-            [RestfulProperties("Sample Rate")]
-            public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy64;
+            [RestfulProperties("ICP Channel Sample Rate")]
+            public IcpChannelSampleRate IcpChannelSampleRate { get; set; } = IcpChannelSampleRate.MsrDivideBy256;
 
             [RestfulProperties("Grounding")]
             public Grounding Grounding { get; set; } = Grounding.Floating;
@@ -150,30 +170,20 @@ namespace QProtocol.InternalModules.ALO
             };
         }
 
+        public new OperationMode GetItemOperationMode()
+        {
+            var jsonObject = base.GetItemOperationMode();
+            return Setting.ConvertTo<ICT454ModuleOperationMode>(jsonObject.Settings).OperationMode;
+        }
+
         public void PutItemOperationMode(OperationMode operationMode)
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALO42S4ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new ICT454ModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
-        }
-
-        public new OperationMode GetItemOperationMode()
-        {
-            var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALO42S4ModuleOperationMode>(jsonObject.Settings).OperationMode;
-        }
-
-        public class BlockSizeJson
-        {
-        public UInt32 BlockSize { get; set; }
-        }
-
-        public UInt32 GetBlockSize()
-        {
-            return RestInterface.Get<BlockSizeJson>(EndPoints.AloBlockSize, HttpParameter.ItemId(ItemId)).BlockSize;
         }
     }
 }

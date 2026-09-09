@@ -27,6 +27,7 @@ namespace QProtocol.ErrorHandling
             : base($"QServer Exception: {statusCode}\n{message}")
         {
             StatusCode = statusCode;
+            StatusMessage = message;
         }
 
         public QProtocolException(string message)
