@@ -192,7 +192,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -224,7 +224,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -256,7 +256,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -282,7 +282,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -301,7 +301,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -315,7 +315,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
