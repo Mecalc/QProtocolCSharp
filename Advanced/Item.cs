@@ -15,7 +15,7 @@ namespace QProtocol.Advanced
     /// By implementing the <see cref="IRestfulInterface"/>, this class will be able to send and receive requests directly from QServer.
     /// </summary>
     [Serializable]
-    public class Item : ItemInfo
+    public class Item: ItemInfo
     {
         public IRestfulInterface RestInterface { get; private set; }
 
@@ -47,7 +47,7 @@ namespace QProtocol.Advanced
         internal Item(SystemSettings systemSettings, IRestfulInterface restfulInterface)
             : base(systemSettings.ItemId, systemSettings.ItemName, systemSettings.ItemNameIdentifier, systemSettings.ItemType, systemSettings.ItemTypeIdentifier)
         {
-            if (systemSettings == null)
+            if(systemSettings == null)
             {
                 throw new ArgumentNullException("SystemSettings argument may not be null.");
             }
@@ -66,7 +66,7 @@ namespace QProtocol.Advanced
         /// <returns>An instance of <see cref="Item"/> representing the QServer system as a tree structure.</returns>
         public static Item Create(IRestfulInterface restfulInterface)
         {
-            if (restfulInterface == null)
+            if(restfulInterface == null)
             {
                 throw new ArgumentNullException(nameof(restfulInterface));
             }
@@ -85,7 +85,7 @@ namespace QProtocol.Advanced
         /// <returns>A List of instances of <see cref="Item"/> representing the QServer system.</returns>
         public static List<Item> CreateList(IRestfulInterface restfulInterface)
         {
-            if (restfulInterface == null)
+            if(restfulInterface == null)
             {
                 throw new ArgumentNullException(nameof(restfulInterface));
             }
@@ -148,7 +148,7 @@ namespace QProtocol.Advanced
         internal void RegisterInterfaceForChildren(Item itemInfo, IRestfulInterface commandInterfaceReference)
         {
             itemInfo.RestInterface = commandInterfaceReference;
-            foreach (var child in itemInfo.Children)
+            foreach(var child in itemInfo.Children)
             {
                 RegisterInterfaceForChildren(child, commandInterfaceReference);
             }
@@ -159,12 +159,12 @@ namespace QProtocol.Advanced
             var nodes = new Stack<Item>();
             nodes.Push(this);
 
-            while (nodes.Count > 0)
+            while(nodes.Count > 0)
             {
                 var node = nodes.Pop();
                 yield return node;
 
-                for (int nodeIndex = node.Children.Count - 1; nodeIndex >= 0; nodeIndex--)
+                for(int nodeIndex = node.Children.Count - 1; nodeIndex >= 0; nodeIndex--)
                 {
                     nodes.Push(node.Children[nodeIndex]);
                 }
@@ -173,7 +173,7 @@ namespace QProtocol.Advanced
 
         private static Item CastToDefinedItem(Item itemInfo)
         {
-            switch ((Types.ItemType)itemInfo.ItemTypeIdentifier)
+            switch((Types.ItemType)itemInfo.ItemTypeIdentifier)
             {
                 case Types.ItemType.Controller:
                     itemInfo = new Controllers.Controller(itemInfo);
@@ -196,7 +196,7 @@ namespace QProtocol.Advanced
                     throw new NotImplementedException($"Item Type {itemInfo.ItemType} ({itemInfo.ItemTypeIdentifier}) is not supported.");
             }
 
-            for (int childIndex = 0; childIndex < itemInfo.Children.Count; childIndex++)
+            for(int childIndex = 0; childIndex < itemInfo.Children.Count; childIndex++)
             {
                 itemInfo.Children[childIndex] = CastToDefinedItem(itemInfo.Children[childIndex]);
             }
@@ -206,7 +206,7 @@ namespace QProtocol.Advanced
 
         private static Item CastToModule(Item itemInfo)
         {
-            switch ((Types.ModuleType)itemInfo.ItemNameIdentifier)
+            switch((Types.ModuleType)itemInfo.ItemNameIdentifier)
             {
                 case Types.ModuleType.ICP4211:
                     return new InternalModules.ICP.ICP4211Module(itemInfo);
@@ -222,6 +222,15 @@ namespace QProtocol.Advanced
 
                 case Types.ModuleType.ICS425:
                     return new InternalModules.ICS.ICS425Module(itemInfo);
+                
+                case Types.ModuleType.ICS450:
+                    return new InternalModules.ICS.ICS450Module(itemInfo);
+
+                case Types.ModuleType.ICM450:
+                    return new InternalModules.ICM.ICM450Module(itemInfo);
+
+                case Types.ModuleType.VIM450:
+                    return new InternalModules.VIM.VIM450Module(itemInfo);
 
                 case Types.ModuleType.ICT426:
                     return new InternalModules.ICT.ICT426Module(itemInfo);
@@ -229,20 +238,38 @@ namespace QProtocol.Advanced
                 case Types.ModuleType.ICT42S6:
                     return new InternalModules.ICT.ICT42S6Module(itemInfo);
 
+                case Types.ModuleType.ICT454:
+                    return new InternalModules.ICT.ICT454Module(itemInfo);
+
                 case Types.ModuleType.TAC221:
                     return new InternalModules.TAC.TAC221Module(itemInfo);
 
                 case Types.ModuleType.DCH42S2:
                     return new InternalModules.DCH.DCH42S2Module(itemInfo);
 
+                case Types.ModuleType.DCH450:
+                    return new InternalModules.DCH.DCH450Module(itemInfo);
+
                 case Types.ModuleType.MIC42X7:
                     return new InternalModules.MIC.MIC42X7Module(itemInfo);
 
                 case Types.ModuleType.CAN42S2:
                     return new InternalModules.CAN.CAN42S2Module(itemInfo);
+                
+                case Types.ModuleType.FLX422:
+                    return new InternalModules.FLX.FLX422Module(itemInfo);
+                
+                case Types.ModuleType.FLX450:
+                    return new InternalModules.FLX.FLX450Module(itemInfo);
+
+                case Types.ModuleType.CAN450:
+                    return new InternalModules.CAN.CAN450Module(itemInfo);
 
                 case Types.ModuleType.ALO42S4:
                     return new InternalModules.ALO.ALO42S4Module(itemInfo);
+
+                case Types.ModuleType.ALO450:
+                    return new InternalModules.ALO.ALO450Module(itemInfo);
 
                 case Types.ModuleType.WSB42X2:
                     return new InternalModules.WSB.WSB42X2Module(itemInfo);
@@ -256,6 +283,9 @@ namespace QProtocol.Advanced
                 case Types.ModuleType.THM427:
                     return new InternalModules.THM.THM427Module(itemInfo);
 
+                case Types.ModuleType.THM450:
+                    return new InternalModules.THM.THM450Module(itemInfo);
+
                 case Types.ModuleType.SCC42T5:
                     return new InternalModules.SCC.SCC42T5Module(itemInfo);
 
@@ -268,21 +298,27 @@ namespace QProtocol.Advanced
                 case Types.ModuleType.XMC100:
                     return new InternalChannels.XMC1XX.XMC100Module(itemInfo);
 
-                case Types.ModuleType.ALI42X1:
-                    return new InternalModules.ALI.ALI42X1Module(itemInfo);
+                case Types.ModuleType.GPS42S6:
+                    return new InternalModules.GPS.GPS42S6Module(itemInfo);
 
-                case Types.ModuleType.ALI42X2:
-                    return new InternalModules.ALI.ALI42X2Module(itemInfo);
-					
+                case Types.ModuleType.GPS450:
+                    return new InternalModules.GPS.GPS450Module(itemInfo);
+
                 case Types.ModuleType.UTM42T0:
                     return new InternalModules.UTM.UTM42T0Module(itemInfo);
 
                 case Types.ModuleType.UTM42T1:
                     return new InternalModules.UTM.UTM42T1Module(itemInfo);
 
+                case Types.ModuleType.UTM450:
+                    return new InternalModules.UTM.UTM450Module(itemInfo);
+
                 case Types.ModuleType.CHG42S9:
                     return new InternalModules.CHG.CHG42S9Module(itemInfo);
 
+                case Types.ModuleType.ICP450:
+                    return new InternalModules.ICP.ICP450Module(itemInfo);
+                
                 default:
                     return itemInfo;
             }
@@ -290,16 +326,31 @@ namespace QProtocol.Advanced
 
         private static Item CastToChannel(Item itemInfo)
         {
-            switch ((Types.ChannelType)itemInfo.ItemNameIdentifier)
+            switch((Types.ChannelType)itemInfo.ItemNameIdentifier)
             {
                 case Types.ChannelType.CAN42S2:
                     return new InternalModules.CAN.CAN42S2Channel(itemInfo);
+
+                case Types.ChannelType.SNav10Location:
+                    return new QSubmodules.SNav10LocationChannel(itemInfo);
+
+                case Types.ChannelType.SNav10Orientation:
+                    return new QSubmodules.SNav10OrientationChannel(itemInfo);
+
+                case Types.ChannelType.SNav10Inertial:
+                    return new QSubmodules.SNav10InertialChannel(itemInfo);
+
+                case Types.ChannelType.SNav10Travel:
+                    return new QSubmodules.SNav10TravelChannel(itemInfo);
 
                 case Types.ChannelType.XMC237Icp:
                     return new InternalChannels.XMC237.XMC237IcpChannel(itemInfo);
 
                 case Types.ChannelType.XMC237CanFd:
                     return new InternalChannels.XMC237.XMC237CanFdChannel(itemInfo);
+
+                case Types.ChannelType.XMC237Gps:
+                    return new InternalChannels.XMC237.XMC237GpsChannel(itemInfo);
 
                 case Types.ChannelType.ICP4211:
                     return new InternalModules.ICP.ICP4211Channel(itemInfo);
@@ -315,6 +366,18 @@ namespace QProtocol.Advanced
 
                 case Types.ChannelType.ICS42L5:
                     return new InternalModules.ICS.ICS42L5Channel(itemInfo);
+                
+                case Types.ChannelType.ICS450:
+                    return new InternalModules.ICS.ICS450Channel(itemInfo);
+
+                case Types.ChannelType.ICP450:
+                    return new InternalModules.ICP.ICP450Channel(itemInfo);
+                
+                case Types.ChannelType.ICM450:
+                    return new InternalModules.ICM.ICM450Channel(itemInfo);
+
+                case Types.ChannelType.VIM450:
+                    return new InternalModules.VIM.VIM450Channel(itemInfo);
 
                 case Types.ChannelType.ICT42S6Tacho:
                     return new InternalModules.ICT.ICT42S6TachoChannel(itemInfo);
@@ -322,15 +385,24 @@ namespace QProtocol.Advanced
                 case Types.ChannelType.ICT426Tacho:
                     return new InternalModules.ICT.ICT426TachoChannel(itemInfo);
 
+                case Types.ChannelType.ICT454Tacho:
+                    return new InternalModules.ICT.ICT454TachoChannel(itemInfo);
+
                 case Types.ChannelType.ICT42S6Scope:
                     return new InternalModules.ICT.ICT42S6ScopeChannel(itemInfo);
 
                 case Types.ChannelType.ICT426Scope:
                     return new InternalModules.ICT.ICT426ScopeChannel(itemInfo);
 
+                case Types.ChannelType.ICT454Scope:
+                    return new InternalModules.ICT.ICT454ScopeChannel(itemInfo);
+
                 case Types.ChannelType.ICT42S6Icp:
                     return new InternalModules.ICT.ICT42S6IcpChannel(itemInfo);
 
+                case Types.ChannelType.ICT454Icp:
+                    return new InternalModules.ICT.ICT454IcpChannel(itemInfo);
+                
                 case Types.ChannelType.ICT426Icp:
                     return new InternalModules.ICT.ICT426IcpChannel(itemInfo);
 
@@ -342,6 +414,9 @@ namespace QProtocol.Advanced
 
                 case Types.ChannelType.ALO42S4:
                     return new InternalModules.ALO.ALO42S4Channel(itemInfo);
+
+                case Types.ChannelType.ALO450:
+                    return new InternalModules.ALO.ALO450Channel(itemInfo);
 
                 case Types.ChannelType.WSB42X2:
                     return new InternalModules.WSB.WSB42X2Channel(itemInfo);
@@ -358,8 +433,14 @@ namespace QProtocol.Advanced
                 case Types.ChannelType.DCH42S2:
                     return new InternalModules.DCH.DCH42S2Channel(itemInfo);
 
+                case Types.ChannelType.DCH450:
+                    return new InternalModules.DCH.DCH450Channel(itemInfo);
+
                 case Types.ChannelType.THM427:
                     return new InternalModules.THM.THM427Channel(itemInfo);
+
+                case Types.ChannelType.THM450:
+                    return new InternalModules.THM.THM450Channel(itemInfo);
 
                 case Types.ChannelType.MIC42X7:
                     return new InternalModules.MIC.MIC42X7Channel(itemInfo);
@@ -367,20 +448,32 @@ namespace QProtocol.Advanced
                 case Types.ChannelType.SCC42T5:
                     return new InternalModules.SCC.SCC42T5Channel(itemInfo);
 
-                case Types.ChannelType.ALI42X1:
-                    return new InternalModules.ALI.ALI42X1Channel(itemInfo);
+                case Types.ChannelType.GPS42S6:
+                    return new InternalModules.GPS.GPS42S6Channel(itemInfo);
 
-                case Types.ChannelType.ALI42X2:
-                    return new InternalModules.ALI.ALI42X2Channel(itemInfo);
-					
+                case Types.ChannelType.GPS450:
+                    return new InternalModules.GPS.GPS450Channel(itemInfo);
+
+                case Types.ChannelType.CAN450:
+                    return new InternalModules.CAN.CAN450Channel(itemInfo);
+
                 case Types.ChannelType.UTM42T0:
                     return new InternalModules.UTM.UTM42T0Channel(itemInfo);
 
                 case Types.ChannelType.UTM42T1:
                     return new InternalModules.UTM.UTM42T1Channel(itemInfo);
 
+                case Types.ChannelType.UTM450:
+                    return new InternalModules.UTM.UTM450Channel(itemInfo);
+
                 case Types.ChannelType.CHG42S9:
                     return new InternalModules.CHG.CHG42S9Channel(itemInfo);
+                
+                case Types.ChannelType.FLX422:
+                    return new InternalModules.FLX.FLX422Channel(itemInfo);
+                
+                case Types.ChannelType.FLX450:
+                    return new InternalModules.FLX.FLX450Channel(itemInfo);
 
                 default:
                     return itemInfo;
@@ -396,7 +489,7 @@ namespace QProtocol.Advanced
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 RestInterface?.Dispose();
             }

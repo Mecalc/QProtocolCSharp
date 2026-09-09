@@ -17,7 +17,7 @@ namespace QProtocol.Interfaces
         /// Gets a name for the parameter.
         /// </summary>
         public string Name { get; internal set; }
-        
+
         /// <summary>
         /// Gets a value for the parameter.
         /// </summary>
@@ -47,7 +47,7 @@ namespace QProtocol.Interfaces
         /// <summary>
         /// This method will construct an instance of <see cref="HttpParameter"/> class which can be used to configure requests which require a MessageIndex to the QServer.
         /// </summary>
-        /// <param name="itemId">Specify an MessageIndex.</param>
+        /// <param name="messageIndex">Specify an MessageIndex.</param>
         /// <returns>An MessageIndex <see cref="HttpParameter"/> class.</returns>
         public static HttpParameter MessageIndex(int messageIndex)
         {

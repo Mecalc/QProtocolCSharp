@@ -14,9 +14,9 @@ using System.Linq;
 namespace QProtocol.InternalModules.ALO
 {
     [Serializable]
-    public class ALO42S4Module : Item
+    public class ALO450Module : Item
     {
-        public ALO42S4Module(Item itemInfo)
+        public ALO450Module(Item itemInfo)
             : base(itemInfo)
         {
         }
@@ -76,7 +76,7 @@ namespace QProtocol.InternalModules.ALO
         }
 
         [Serializable]
-        public class ALO42S4ModuleOperationMode
+        public class ALO450ModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -154,7 +154,7 @@ namespace QProtocol.InternalModules.ALO
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALO42S4ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new ALO450ModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
@@ -163,7 +163,7 @@ namespace QProtocol.InternalModules.ALO
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALO42S4ModuleOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<ALO450ModuleOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public class BlockSizeJson

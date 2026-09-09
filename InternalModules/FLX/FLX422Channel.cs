@@ -11,50 +11,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ALO
+namespace QProtocol.InternalModules.FLX
 {
     [Serializable]
-    public class ALO42S4Module : Item
+    public class FLX422Channel : DataChannelItem
     {
-        public ALO42S4Module(Item itemInfo)
+        public FLX422Channel(Item itemInfo)
             : base(itemInfo)
         {
         }
 
-        public const System.Int32 NumberOfChannelsOnModule = 4;
-
-        public enum Grounding
-        {
-            [RestfulProperties("Floating")]
-            Floating = 0,
-
-            [RestfulProperties("Grounded")]
-            Grounded = 1,
-        }
-
-        public enum SampleRate
-        {
-            [RestfulProperties("MSR Divide by 1", 1, "")]
-            MsrDivideBy1 = 0,
-
-            [RestfulProperties("MSR Divide by 2", 2, "")]
-            MsrDivideBy2 = 1,
-
-            [RestfulProperties("MSR Divide by 4", 4, "")]
-            MsrDivideBy4 = 2,
-
-            [RestfulProperties("MSR Divide by 8", 8, "")]
-            MsrDivideBy8 = 3,
-
-            [RestfulProperties("MSR Divide by 16", 16, "")]
-            MsrDivideBy16 = 4,
-
-            [RestfulProperties("MSR Divide by 32", 32, "")]
-            MsrDivideBy32 = 5,
-
-            [RestfulProperties("MSR Divide by 64", 64, "")]
-            MsrDivideBy64 = 6,
-        }
 
         public enum OperationMode
         {
@@ -63,12 +29,24 @@ namespace QProtocol.InternalModules.ALO
 
             [RestfulProperties("Enabled")]
             Enabled = 1,
+        }
 
-            [RestfulProperties("Mirror Left Module")]
-            MirrorLeftModule = 2,
+        public struct SettingsDelayCompensationAsByte
+        {
+            public const Byte UpperLimit = 200;
+            public const Byte LowerLimit = 0;
+        }
 
-            [RestfulProperties("Arbitrary Waveform")]
-            ArbitraryWaveform = 3,
+        public struct SettingsMacroInitialOffsetAsByte
+        {
+            public const Byte UpperLimit = 68;
+            public const Byte LowerLimit = 2;
+        }
+
+        public struct SettingsMicroInitialOffsetAsByte
+        {
+            public const Byte UpperLimit = 239;
+            public const Byte LowerLimit = 0;
         }
 
         public interface ISettings
@@ -76,37 +54,30 @@ namespace QProtocol.InternalModules.ALO
         }
 
         [Serializable]
-        public class ALO42S4ModuleOperationMode
+        public class FLX422ChannelOperationMode
         {
             [RestfulProperties("Operation Mode")]
-            public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
+            public OperationMode OperationMode { get; set; } = OperationMode.Disabled;
         }
 
         [Serializable]
         public class EnabledSettings : ISettings
         {
 
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-        }
+            [RestfulProperties("Fifo Filter Parameters")]
+            public GenericDefines.FLXChannel.FifoFilterParameters FifoFilterParameters { get; set; }
 
-        [Serializable]
-        public class MirrorLeftModuleSettings : ISettings
-        {
+            [RestfulProperties("Transmit Buffer Setup")]
+            public GenericDefines.FLXChannel.TransmitBuffer TransmitBuffer { get; set; }
 
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-        }
+            [RestfulProperties("Delay Compensation")]
+            public Byte DelayCompensation { get; set; } = 0;
 
-        [Serializable]
-        public class ArbitraryWaveformSettings : ISettings
-        {
+            [RestfulProperties("Macro Initial Offset")]
+            public Byte MacroInitialOffset { get; set; } = 2;
 
-            [RestfulProperties("Sample Rate")]
-            public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy64;
-
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
+            [RestfulProperties("Micro Initial Offset")]
+            public Byte MicroInitialOffset { get; set; } = 0;
         }
 
         [Serializable]
@@ -154,7 +125,7 @@ namespace QProtocol.InternalModules.ALO
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALO42S4ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new FLX422ChannelOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
@@ -163,17 +134,17 @@ namespace QProtocol.InternalModules.ALO
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALO42S4ModuleOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<FLX422ChannelOperationMode>(jsonObject.Settings).OperationMode;
         }
 
-        public class BlockSizeJson
+        public void FlxTransmitMessage(FLXChannel.TransmitMessage message)
         {
-        public UInt32 BlockSize { get; set; }
+            RestInterface.Put(EndPoints.FlexRayTransmit, message, HttpParameter.ItemId(ItemId));
         }
 
-        public UInt32 GetBlockSize()
+        public void FlxRequestStatus(FLXChannel.StatusRequestType requestType)
         {
-            return RestInterface.Get<BlockSizeJson>(EndPoints.AloBlockSize, HttpParameter.ItemId(ItemId)).BlockSize;
+            RestInterface.Put(EndPoints.FlexRayStatus, new FLXChannel.StatusRequestTypeSettings {StatusRequestType = requestType}, HttpParameter.ItemId(ItemId));
         }
     }
 }

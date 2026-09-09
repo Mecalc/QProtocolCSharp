@@ -14,9 +14,9 @@ using System.Linq;
 namespace QProtocol.InternalModules.ALO
 {
     [Serializable]
-    public class ALO42S4Channel : Item
+    public class ALO450Channel : Item
     {
-        public ALO42S4Channel(Item itemInfo)
+        public ALO450Channel(Item itemInfo)
             : base(itemInfo)
         {
         }
@@ -138,7 +138,7 @@ namespace QProtocol.InternalModules.ALO
         }
 
         [Serializable]
-        public class ALO42S4ChannelOperationMode
+        public class ALO450ChannelOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.DcGenerator;
@@ -192,7 +192,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -224,7 +224,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -256,7 +256,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -282,7 +282,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -301,7 +301,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -315,7 +315,7 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Output Voltage Level")]
             public OutputVoltageLevel OutputVoltageLevel { get; set; } = OutputVoltageLevel._5V;
 
-            [RestfulProperties("Extended Frame")]
+            [RestfulProperties("Module Status Output")]
             public ModuleStatusOutput ModuleStatusOutput { get; set; } = ModuleStatusOutput.OpenCircuit;
         }
 
@@ -364,7 +364,7 @@ namespace QProtocol.InternalModules.ALO
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALO42S4ChannelOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new ALO450ChannelOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
@@ -373,7 +373,7 @@ namespace QProtocol.InternalModules.ALO
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALO42S4ChannelOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<ALO450ChannelOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public class PortJson

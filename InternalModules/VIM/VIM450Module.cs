@@ -11,17 +11,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ALO
+namespace QProtocol.InternalModules.VIM
 {
     [Serializable]
-    public class ALO42S4Module : Item
+    public class VIM450Module : Item
     {
-        public ALO42S4Module(Item itemInfo)
+        public VIM450Module(Item itemInfo)
             : base(itemInfo)
         {
         }
 
-        public const System.Int32 NumberOfChannelsOnModule = 4;
+        public const System.Int32 NumberOfChannelsOnModule = 6;
+
+        public enum SampleRate
+        {
+            [RestfulProperties("MSR Divide by 2", 2, "")]
+            MsrDivideBy2 = 0,
+
+            [RestfulProperties("MSR Divide by 4", 4, "")]
+            MsrDivideBy4 = 1,
+
+            [RestfulProperties("MSR Divide by 8", 8, "")]
+            MsrDivideBy8 = 2,
+
+            [RestfulProperties("MSR Divide by 16", 16, "")]
+            MsrDivideBy16 = 3,
+
+            [RestfulProperties("MSR Divide by 32", 32, "")]
+            MsrDivideBy32 = 4,
+
+            [RestfulProperties("MSR Divide by 64", 64, "")]
+            MsrDivideBy64 = 5,
+
+            [RestfulProperties("MSR Divide by 128", 128, "")]
+            MsrDivideBy128 = 6,
+
+            [RestfulProperties("MSR Divide by 256", 256, "")]
+            MsrDivideBy256 = 7,
+        }
 
         public enum Grounding
         {
@@ -32,28 +59,19 @@ namespace QProtocol.InternalModules.ALO
             Grounded = 1,
         }
 
-        public enum SampleRate
+        public enum HighSampleRate
         {
             [RestfulProperties("MSR Divide by 1", 1, "")]
             MsrDivideBy1 = 0,
+        }
 
-            [RestfulProperties("MSR Divide by 2", 2, "")]
-            MsrDivideBy2 = 1,
+        public enum CalibrationDacOutputOnLemo
+        {
+            [RestfulProperties("Off")]
+            Off = 0,
 
-            [RestfulProperties("MSR Divide by 4", 4, "")]
-            MsrDivideBy4 = 2,
-
-            [RestfulProperties("MSR Divide by 8", 8, "")]
-            MsrDivideBy8 = 3,
-
-            [RestfulProperties("MSR Divide by 16", 16, "")]
-            MsrDivideBy16 = 4,
-
-            [RestfulProperties("MSR Divide by 32", 32, "")]
-            MsrDivideBy32 = 5,
-
-            [RestfulProperties("MSR Divide by 64", 64, "")]
-            MsrDivideBy64 = 6,
+            [RestfulProperties("On")]
+            On = 1,
         }
 
         public enum OperationMode
@@ -64,11 +82,15 @@ namespace QProtocol.InternalModules.ALO
             [RestfulProperties("Enabled")]
             Enabled = 1,
 
-            [RestfulProperties("Mirror Left Module")]
-            MirrorLeftModule = 2,
+            [RestfulProperties("Four Channel High Sample Rate")]
+            FourChannelHighSampleRate = 2,
+        }
 
-            [RestfulProperties("Arbitrary Waveform")]
-            ArbitraryWaveform = 3,
+        [Serializable]
+        public class UserData
+        {
+            [RestfulProperties("Data")]
+            public System.Collections.Generic.List<Byte> Data { get; set; }
         }
 
         public interface ISettings
@@ -76,7 +98,7 @@ namespace QProtocol.InternalModules.ALO
         }
 
         [Serializable]
-        public class ALO42S4ModuleOperationMode
+        public class VIM450ModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -86,24 +108,19 @@ namespace QProtocol.InternalModules.ALO
         public class EnabledSettings : ISettings
         {
 
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-        }
-
-        [Serializable]
-        public class MirrorLeftModuleSettings : ISettings
-        {
-
-            [RestfulProperties("Grounding")]
-            public Grounding Grounding { get; set; } = Grounding.Floating;
-        }
-
-        [Serializable]
-        public class ArbitraryWaveformSettings : ISettings
-        {
-
             [RestfulProperties("Sample Rate")]
-            public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy64;
+            public SampleRate SampleRate { get; set; } = SampleRate.MsrDivideBy256;
+
+            [RestfulProperties("Grounding")]
+            public Grounding Grounding { get; set; } = Grounding.Floating;
+        }
+
+        [Serializable]
+        public class FourChannelHighSampleRateSettings : ISettings
+        {
+
+            [RestfulProperties("High Sample Rate")]
+            public HighSampleRate HighSampleRate { get; set; } = HighSampleRate.MsrDivideBy1;
 
             [RestfulProperties("Grounding")]
             public Grounding Grounding { get; set; } = Grounding.Floating;
@@ -150,30 +167,20 @@ namespace QProtocol.InternalModules.ALO
             };
         }
 
+        public new OperationMode GetItemOperationMode()
+        {
+            var jsonObject = base.GetItemOperationMode();
+            return Setting.ConvertTo<VIM450ModuleOperationMode>(jsonObject.Settings).OperationMode;
+        }
+
         public void PutItemOperationMode(OperationMode operationMode)
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALO42S4ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new VIM450ModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);
-        }
-
-        public new OperationMode GetItemOperationMode()
-        {
-            var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALO42S4ModuleOperationMode>(jsonObject.Settings).OperationMode;
-        }
-
-        public class BlockSizeJson
-        {
-        public UInt32 BlockSize { get; set; }
-        }
-
-        public UInt32 GetBlockSize()
-        {
-            return RestInterface.Get<BlockSizeJson>(EndPoints.AloBlockSize, HttpParameter.ItemId(ItemId)).BlockSize;
         }
     }
 }

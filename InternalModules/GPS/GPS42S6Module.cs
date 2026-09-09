@@ -11,12 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QProtocol.InternalModules.ALI
+namespace QProtocol.InternalModules.GPS
 {
     [Serializable]
-    public class ALI42X2Module : Item
+    public class GPS42S6Module : Item
     {
-        public ALI42X2Module(Item itemInfo)
+        public GPS42S6Module(Item itemInfo)
             : base(itemInfo)
         {
         }
@@ -32,18 +32,12 @@ namespace QProtocol.InternalModules.ALI
             Enabled = 1,
         }
 
-        public enum DownloadRate
-        {
-            [RestfulProperties("MSR Divide by 1", 1, "")]
-            MsrDivideBy1 = 0,
-        }
-
         public interface ISettings
         {
         }
 
         [Serializable]
-        public class ALI42X2ModuleOperationMode
+        public class GPS42S6ModuleOperationMode
         {
             [RestfulProperties("Operation Mode")]
             public OperationMode OperationMode { get; set; } = OperationMode.Enabled;
@@ -78,7 +72,7 @@ namespace QProtocol.InternalModules.ALI
         public new OperationMode GetItemOperationMode()
         {
             var jsonObject = base.GetItemOperationMode();
-            return Setting.ConvertTo<ALI42X2ModuleOperationMode>(jsonObject.Settings).OperationMode;
+            return Setting.ConvertTo<GPS42S6ModuleOperationMode>(jsonObject.Settings).OperationMode;
         }
 
         public SettingsCollection<T> GetItemSettings<T>()
@@ -96,7 +90,7 @@ namespace QProtocol.InternalModules.ALI
         {
             var operationModeSettings = new ItemOperationMode(this)
             {
-                Settings = Setting.ConvertFrom(new ALI42X2ModuleOperationMode() {OperationMode = operationMode}),
+                Settings = Setting.ConvertFrom(new GPS42S6ModuleOperationMode() {OperationMode = operationMode}),
             };
             
             base.PutItemOperationMode(operationModeSettings);

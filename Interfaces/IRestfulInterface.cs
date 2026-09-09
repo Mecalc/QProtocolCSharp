@@ -19,12 +19,27 @@ namespace QProtocol.Interfaces
         void Put(string endpoint, params HttpParameter[] parameters);
 
         /// <summary>
+        /// This method will PUT a HTTP request to the QServer without body text.
+        /// </summary>
+        /// <param name="endpoint">The endpoint as described in <see cref="EndPoints"/></param>
+        /// <param name="parameters">A tuple with the request parameter name and value</param>
+        T Put<T>(string endpoint, params HttpParameter[] parameters);
+
+        /// <summary>
         /// This method will PUT a HTTP request to the QServer with body text.
         /// </summary>
         /// <param name="endpoint">The endpoint as described in <see cref="EndPoints"/></param>
         /// <param name="parameters">A tuple with the request parameter name and value</param>
         void Put(string endpoint, object body, params HttpParameter[] parameters);
 
+        /// <summary>
+        /// This method will POST a HTTP request to the QServer with body text.
+        /// </summary>
+        /// <param name="endpoint">The endpoint as described in <see cref="EndPoints"/></param>
+        /// <param name="body">The JSON payload, used as input to the query</param>
+        /// <param name="parameters">A tuple with the request parameter name and value</param>
+        T Post<T>(string endpoint, object body, params HttpParameter[] parameters);
+        
         /// <summary>
         /// This method will GET a HTTP response from the QServer with body text.
         /// </summary>
