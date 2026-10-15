@@ -64,7 +64,7 @@ namespace QProtocol.InternalModules.CHG
         public enum ChargeSensitivity
         {
             [RestfulProperties("100 µV/pC", 0.1, "")]
-            _10uVppC = 0,
+            _100uVppC = 0,
 
             [RestfulProperties("1 mV/pC", 1, "")]
             _1mVppC = 1,
